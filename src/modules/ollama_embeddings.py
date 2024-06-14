@@ -1,54 +1,52 @@
 import os
+import time
+import random
+import warnings
 import ollama
-import chromadb
+from langchain_chroma import Chroma
+from chromadb import PersistentClient
 
-# Create the "mydbs" directory if it doesn't exist
-db_dir = "mydbs"
-os.makedirs(db_dir, exist_ok=True)
+# Suppress specific warnings
+warnings.filterwarnings("ignore", category=UserWarning, message="The installed version of bitsandbytes was compiled without GPU support.")
 
-documents = [
-    "Llamas are members of the camelid family meaning they're pretty closely related to vicuñas and camels",
-    "Llamas were first domesticated and used as pack animals 4,000 to 5,000 years ago in the Peruvian highlands",
-    "Llamas can grow as much as 6 feet tall though the average llama between 5 feet 6 inches and 5 feet 9 inches tall",
-    "Llamas weigh between 280 and 450 pounds and can carry 25 to 30 percent of their body weight",
-    "Llamas are vegetarians and have very efficient digestive systems",
-    "Llamas live to be about 20 years old, though some only live for 15 years and others live to be 30 years old",
-]
+DB_DIR = os.path.join(os.path.dirname(__file__), "..", "mydbs")
 
-client = chromadb.PersistentClient(
-    path=db_dir,
-    settings=chromadb.config.Settings(),
-)
-collection = client.create_collection(name="docs")
+def create_db_directory():
+    if not os.path.exists(DB_DIR):
+        os.makedirs(DB_DIR)
 
-# Store each document in a vector embedding database
-for i, d in enumerate(documents):
-    response = ollama.embeddings(model="all-minilm", prompt=d)
-    embedding = response["embedding"]
-    collection.add(
-        ids=[str(i)],
-        embeddings=[embedding],
-        documents=[d]
+def generate_unique_id():
+    timestamp = int(time.time())
+    random_num = random.randint(0, 1000000)
+    return f"{timestamp}_{random_num}"
+
+def store_embeddings(prompt, response):
+    # Skip storing embeddings if the prompt or response is empty or whitespace
+    if not prompt.strip() or not response.strip():
+        print("Skipping storage: Prompt or response is empty or whitespace.")
+        return
+
+    create_db_directory()
+
+    # Generate embeddings using ollama
+    prompt_embedding = ollama.embeddings(model="all-minilm", prompt=prompt)["embedding"]
+    response_embedding = ollama.embeddings(model="all-minilm", prompt=response)["embedding"]
+
+    persistent_client = PersistentClient(path=DB_DIR)
+    collection = persistent_client.get_or_create_collection("chat_history")
+
+    langchain_chroma = Chroma(
+        client=persistent_client,
+        collection_name="chat_history",
     )
 
-# An example prompt
-prompt = "What animals are llamas related to?"
+    # Generate unique IDs for the prompt and response embeddings
+    prompt_id = generate_unique_id()
+    response_id = generate_unique_id()
 
-# Generate an embedding for the prompt and retrieve the most relevant doc
-response = ollama.embeddings(
-    prompt=prompt,
-    model="all-minilm"
-)
-results = collection.query(
-    query_embeddings=[response["embedding"]],
-    n_results=1
-)
-data = results['documents'][0][0]
+    # Store the prompt and response embeddings in the Chroma database
+    langchain_chroma.add_embeddings([prompt_embedding], metadatas=[{"text": prompt, "response": response}], ids=[prompt_id])
+    langchain_chroma.add_embeddings([response_embedding], metadatas=[{"text": response, "response": response}], ids=[response_id])
 
-# Generate a response combining the prompt and data we retrieved
-output = ollama.generate(
-    model="gemma:2b",
-    prompt=f"Using this data: {data}. Respond to this prompt: {prompt}"
-)
+    print(f"Stored prompt with ID: {p
 
-print(output['response'])
