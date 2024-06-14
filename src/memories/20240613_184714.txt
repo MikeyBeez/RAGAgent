@@ -1,0 +1,9 @@
+Prompt:
+Why is the sky blue
+
+Response:
+The sky appears blue due to Rayleigh scattering. 
+
+Rayleigh scattering is a phenomenon in which light waves are scattered in different directions depending on their wavelength. Shorter wavelength light, such as blue light, is scattered more strongly than longer wavelength light. This is why the sky appears blue.
+
+The blue color of the sky is also caused by the fact that the atmosphere is mostly composed of nitrogen and oxygen molecules. These molecules absorb shorter wavelengths of light, such as blue light, more effectively than they do longer wavelengths of light. This means that more blue light is scattered in all directions, giving the sky its characteristic blue color.
