@@ -1,6 +1,11 @@
+# chroma_retrieve.py
+
 import os
 import ollama
 import chromadb
+
+# Define the directory for the database
+db_dir = './mydbs'  # Update this path as necessary
 
 client = chromadb.PersistentClient(
     path=db_dir,
@@ -16,7 +21,8 @@ def retrieve_relevant_data(query):
     # Retrieve the most relevant document based on the query embedding
     results = collection.query(
         query_embeddings=[query_embedding],
-        n_results=1
+        n_results=3
     )
 
     return results['documents'][0][0]
+
