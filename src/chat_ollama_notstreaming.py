@@ -1,3 +1,4 @@
+
 import os
 import requests
 import json
@@ -30,12 +31,11 @@ def main():
             break
 
         data = {
-            "model": model_name,
-            "prompt": prompt,
-            "keep_alive": "1h",  # Set keep_alive to 1 hour
-            "stream": True  # Enable streaming
-        }
-        response = requests.post(api_url, json=data, stream=True)  # Set stream=True
+        "model": model_name,
+        "prompt": prompt,
+        "keep_alive": "1h"  # Set keep_alive to 1 hour
+    }
+        response = requests.post(api_url, json=data)
 
         print("\033[1;32mAgent: \033[0m", end="")  # Print "Agent: " in bright green
 
@@ -44,11 +44,11 @@ def main():
             if line:
                 line_decoded = line.decode("utf-8")
                 response_json = json.loads(line_decoded)
-                print(response_json["response"], end="", flush=True)  # Print each line as it is received
+                print(response_json["response"], end="")  # Print the output
                 response_text += response_json["response"]
 
         print("\n")  # Print a newline after streaming finishes
         save_prompt_and_response(prompt, response_text)
 
 if __name__ == "__main__":
-    main()
+    main() 
