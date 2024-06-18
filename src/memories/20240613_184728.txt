@@ -1,5 +1,0 @@
-Prompt:
-who was beethoven
-
-Response:
-Ludwig van Beethoven was a German composer who lived from 1770 to 1827. He is considered one of the greatest composers of all time, and his music has had a profound influence on the development of classical music. Beethoven was a complex and contradictory character, but he was also a gifted musician and a deeply dedicated teacher.

@@ -1,5 +1,0 @@
-Prompt:
-Hi
-
-Response:
-Hello! How can I assist you today? Is there anything I can help you with?
