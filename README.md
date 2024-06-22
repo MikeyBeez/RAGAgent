@@ -36,9 +36,9 @@ This is a nascent project to create an AI chat agent for macOS using LangChain, 
 Ensure Ollama is installed and running on your macOS system
 Pull the Llama3 model:
 
-    ```
+    ~~~
     ollama pull llama3
-    ```
+    ~~~
 
 Usage
 Run the chat application:
