@@ -1,22 +1,20 @@
 import logging
 import subprocess
+import textwrap
 from rich.console import Console
-from rich.live import Live
-from rich.panel import Panel
 from rich.text import Text
 from langchain_community.llms import Ollama
 from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from modules.create_memories import save_prompt_and_response
 import pyperclip
+import threading
+import queue
+import time
 
 # Set up logging
 logging.basicConfig(filename='chat_ollama.log', level=logging.INFO, 
                     format='%(asctime)s - %(levelname)s - %(message)s')
-
-def create_chat_panel(prompt, response, index):
-    content = f"[bold magenta]You:[/bold magenta] {prompt}\n\n[bold green]Otto:[/bold green] {response}"
-    return Panel(content, title=f"Interaction {index + 1}", border_style="bold")
 
 def get_available_models():
     try:
@@ -27,10 +25,33 @@ def get_available_models():
         logging.error(f"Error fetching models: {str(e)}")
         return []
 
+def print_wrapped_text(console, text):
+    wrapped_text = textwrap.fill(text, width=70)
+    console.print(wrapped_text, end="")
+
+
+def speak_text(text):
+    try:
+        time.sleep(0.5)  # Add a 0.5-second delay before speaking
+        subprocess.run(['say', text], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error in text-to-speech: {e}")
+
+
+def tts_worker(tts_queue):
+    while True:
+        text = tts_queue.get()
+        if text is None:
+            break
+        speak_text(text)
+        tts_queue.task_done()
+
 def main():
     logging.info("Starting chat application")
     
     console = Console()
+
+    user_name = console.input("[bold yellow]Enter your name (or press Enter for 'User'): [/bold yellow]").strip() or "User"
 
     available_models = get_available_models()
     
@@ -43,7 +64,7 @@ def main():
     for model in available_models:
         console.print(f"- {model}")
 
-    default_model = "llama3" if "llama3" in available_models else available_models[0]
+    default_model = "llama3:latest" if "llama3:latest" in available_models else available_models[0]
     model_name = console.input(f"[bold yellow]Enter the Ollama model name (default is {default_model}): [/bold yellow]")
     model_name = model_name.strip() if model_name.strip() else default_model
     
@@ -60,6 +81,10 @@ def main():
         return
 
     chat_history = []
+    text_to_speech_enabled = False
+    tts_queue = queue.Queue()
+    tts_thread = threading.Thread(target=tts_worker, args=(tts_queue,))
+    tts_thread.start()
 
     prompt_template = ChatPromptTemplate.from_messages(
         [
@@ -71,17 +96,26 @@ def main():
 
     chain = prompt_template | llm
 
-    interaction_count = 0
-
     while True:
-        prompt = console.input("[bold magenta]Enter your prompt (type 'copy' to copy last interaction, '/quit' to exit): [/bold magenta]")
+        console.print(f"[bold magenta]{user_name}, enter your prompt (type '/copy' to copy last interaction, '/talk' to enable TTS, '/notalk' to disable TTS, '/quit' to exit):[/bold magenta]")
+        prompt = console.input()
         console.print()
 
         if prompt.lower() == "/quit":
             break
 
-        if prompt.lower() == "copy" and interaction_count > 0:
-            to_copy = f"You: {chat_history[-2].content}\nOtto: {chat_history[-1].content}"
+        if prompt.lower() == "/talk":
+            text_to_speech_enabled = True
+            console.print("[bold cyan]Text-to-speech enabled[/bold cyan]")
+            continue
+
+        if prompt.lower() == "/notalk":
+            text_to_speech_enabled = False
+            console.print("[bold cyan]Text-to-speech disabled[/bold cyan]")
+            continue
+
+        if prompt.lower() == "/copy" and chat_history:
+            to_copy = f"{user_name}: {chat_history[-2].content}\nOtto: {chat_history[-1].content}"
             pyperclip.copy(to_copy)
             console.print("[bold cyan]Copied last interaction to clipboard![/bold cyan]")
             continue
@@ -89,28 +123,44 @@ def main():
         logging.info(f"User input: {prompt}")
 
         try:
+            console.print(f"[bold magenta]{user_name}:[/bold magenta] {prompt}")
+            
+            console.print("[bold green]Otto:[/bold green] ", end="")
             response_text = ""
-            with Live(Panel(response_text, title="Otto is thinking...", border_style="yellow"), refresh_per_second=4) as live:
-                for chunk in llm.stream(prompt_template.format(input=prompt, chat_history=chat_history)):
-                    response_text += chunk
-                    live.update(Panel(response_text, title="Otto", border_style="green"))
+            buffer = ""
+            for chunk in llm.stream(prompt_template.format(input=prompt, chat_history=chat_history)):
+                response_text += chunk
+                buffer += chunk
+                if "\n" in buffer or len(buffer) > 50:
+                    lines = buffer.split("\n")
+                    for line in lines[:-1]:
+                        print_wrapped_text(console, line)
+                        console.print()
+                        if text_to_speech_enabled:
+                            tts_queue.put(line)
+                    buffer = lines[-1]
+            if buffer:
+                print_wrapped_text(console, buffer)
+                console.print()
+                if text_to_speech_enabled:
+                    tts_queue.put(buffer)
 
             logging.info(f"AI response: {response_text}")
 
             chat_history.append(HumanMessage(content=prompt))
             chat_history.append(AIMessage(content=response_text))
 
-            panel = create_chat_panel(prompt, response_text, interaction_count)
-            console.print(panel)
-
             save_prompt_and_response(prompt, response_text)
 
-            interaction_count += 1
+            console.print("[bold cyan]Type 'copy' to copy this interaction, or enter a new prompt.[/bold cyan]")
 
         except Exception as e:
             console.print(f"[bold red]Error during interaction: {str(e)}[/bold red]")
             logging.error(f"Error during interaction: {str(e)}")
 
+    # Clean up TTS thread
+    tts_queue.put(None)
+    tts_thread.join()
     logging.info("Chat application terminated")
 
 if __name__ == "__main__":
