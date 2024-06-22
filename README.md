@@ -40,7 +40,7 @@ bashCopyollama pull llama3
 Usage
 Run the chat application:
 
-    ```bash 
+   ```bash
     cd src
     python main.py
 
