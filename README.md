@@ -41,6 +41,7 @@ Usage
 Run the chat application:
 
     ```bash
+
     cd src
     python main.py
     ```
