@@ -29,9 +29,9 @@ This is a nascent project to create an AI chat agent for macOS using LangChain, 
 2. Set up a Conda environment (recommended)
 3. Install required packages:
 
-   ```bash
-   pip install -r requirements.txt
-
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 Ensure Ollama is installed and running on your macOS system
 Pull the Llama3 model:
@@ -40,9 +40,10 @@ bashCopyollama pull llama3
 Usage
 Run the chat application:
 
-   ```bash
+    ```bash
     cd src
     python main.py
+    ```
 
 
 Enter your prompts when prompted.
