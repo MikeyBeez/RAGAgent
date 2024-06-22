@@ -68,12 +68,4 @@ Contributing
 As this is a personal project in its early stages, we're not actively seeking contributions at this time. However, feel free to fork the repository and experiment with your own modifications.
 License
 MIT license
-Copy
-This updated README.md now includes:
 
-1. A specification in the title that this is for macOS.
-2. Mention of the 'say' command for text-to-speech in the Current Features section.
-3. Instructions on how to use macOS's built-in dictation feature for speech-to-text input in the Usage section.
-4. Updated Setup instructions to clarify that this is for macOS systems.
-
-These changes make it clear that the project is designed for macOS and takes advantage of some of its built-in features for both text-to-speech and speech-to-text functionality. CopyRetryClaude does not have the ability to run the code it generates yet.Claude can make mistakes. Please double-check responses.
