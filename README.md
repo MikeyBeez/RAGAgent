@@ -6,6 +6,8 @@
 
 This is a nascent project to create an AI chat agent for macOS using LangChain, Ollama, and various tools. The agent is designed to engage in conversations, use external tools, and provide informative responses.
 
+You should also look at the file visual.py as it uses googl'e multimodel models to do image recognition tasks.  This is a working standalone program that I want to integrate into this project.
+
 ## Current Features
 
 - Basic chat functionality using Ollama with the Llama3 model
