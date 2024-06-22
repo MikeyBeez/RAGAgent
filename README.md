@@ -39,8 +39,9 @@ bashCopyollama pull llama3
 
 Usage
 Run the chat application:
-bashCopycd src
-python main.py
+    '''bash 
+    cd src
+    python main.py
 
 Enter your prompts when prompted.
 Type '/talk' to enable text-to-speech.
