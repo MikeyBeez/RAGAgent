@@ -30,7 +30,7 @@ This is a nascent project to create an AI chat agent for macOS using LangChain, 
 3. Install required packages:
 
    ```bash
-   pip install langchain pyperclip rich
+   pip install -r requirements.txt
 
 Ensure Ollama is installed and running on your macOS system
 Pull the Llama3 model:
@@ -40,7 +40,7 @@ bashCopyollama pull llama3
 Usage
 Run the chat application:
 bashCopycd src
-python chat_ollama.py
+python main.py
 
 Enter your prompts when prompted.
 Type '/talk' to enable text-to-speech.
