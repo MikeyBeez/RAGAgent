@@ -8,12 +8,12 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
 from rich.text import Text
+from rich.columns import Columns
 from prompt_toolkit import prompt
 from prompt_toolkit.formatted_text import HTML
 
 def setup_console():
     return Console()
-
 
 def print_welcome_banner(console):
     banner = """
@@ -23,7 +23,7 @@ def print_welcome_banner(console):
     [bold blue]██    ██    ██       ██    ██    ██[/bold blue]
     [bold magenta]██    ██    ██       ██    ██    ██[/bold magenta]
     [bold cyan] ██████     ██       ██     ██████ [/bold cyan]
-
+    
     [bold white]Your Intelligent Conversational Companion[/bold white]
     """
     console.print(Panel(Align.center(banner), border_style="bold white", expand=False))
@@ -48,13 +48,23 @@ def get_user_name(console):
     return prompt(HTML('<ansiyellow><b>Your chosen name (or press Enter for \'User\'): </b></ansiyellow>')).strip() or "User"
 
 def get_model_choice(console, available_models):
-    model_list = "\n".join([f"[cyan]•[/cyan] {model}" for model in available_models])
-    console.print(Panel(
-        f"[bold yellow]Behold, the pantheon of AI models at your disposal:[/bold yellow]\n\n{model_list}",
+    # Create a list of formatted model names
+    model_list = [f"[cyan]• {model}[/cyan]" for model in available_models]
+    
+    # Create two columns of models
+    columns = Columns(model_list, equal=True, expand=False)
+    
+    # Create a panel with the columns
+    panel = Panel(
+        Align.center(columns),
         title="[bold green]Available Models[/bold green]",
         border_style="bold blue",
         expand=False
-    ))
+    )
+    
+    # Print the introduction and the panel
+    console.print("[bold yellow]Behold, the pantheon of AI models at your disposal:[/bold yellow]\n")
+    console.print(panel)
 
     default_model = "llama3:latest" if "llama3:latest" in available_models else available_models[0]
     return prompt(HTML(f'<ansiyellow><b>Choose your AI companion (default is {default_model}): </b></ansiyellow>')).strip() or default_model
