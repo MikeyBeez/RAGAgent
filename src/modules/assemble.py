@@ -1,3 +1,6 @@
+#/src/modules/assemble.py
+# This module assembles context
+
 import spacy
 import ollama
 from modules.ddg_search import DDGSearch

@@ -1,4 +1,5 @@
 # modules/chat_history.py
+# This module stores prompt response pairs in json format in the memories dir.
 from langchain_core.messages import HumanMessage, AIMessage
 from modules.create_memories import save_prompt_and_response
 

@@ -1,4 +1,5 @@
 # modules/command_handler.py
+# This module runs all the special commands that start with a slash /
 import pyperclip
 
 def is_command(user_input):
