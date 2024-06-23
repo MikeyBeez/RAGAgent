@@ -78,12 +78,16 @@ def print_command_result(console, result):
 def print_copy_instruction(console):
     console.print("[bold cyan]Type '/copy' to copy this interaction, or enter a new prompt.[/bold cyan]")
 
+# In the print_chat_history function in console_utils.py
+
 def print_chat_history(console, chat_history):
     """Prints the chat history to the console."""
-    console.print("[bold blue]Chat History:[/bold blue]\n")  # Add an extra newline for clarity
+    console.print("[bold blue]Chat History:[/bold blue]\n")
     for i, message in enumerate(chat_history):
         if i % 2 == 0:  # User message
             console.print(f"[bold cyan]User:[/bold cyan] {message.content}")
         else:  # AI message
             console.print(f"[bold green]Otto:[/bold green] {message.content}")
+    console.print(f"\n[bold blue]Total interactions: {len(chat_history) // 2}[/bold blue]")
     console.print()  # Add a newline after the chat history
+
