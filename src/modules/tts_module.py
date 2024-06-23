@@ -1,4 +1,6 @@
-# modules/tts_module.py
+# src/modules/tts_module.py
+# This module handles all the text to speech.
+
 import subprocess
 import threading
 import queue

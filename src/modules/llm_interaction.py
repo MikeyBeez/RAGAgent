@@ -1,3 +1,7 @@
+# src/modules/llm)interaction.py
+# This module has the system message and does animation.
+# More importantly it talks to the LLM and returns a stream of text.  
+
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from modules import console_utils
 import time

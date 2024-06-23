@@ -1,4 +1,8 @@
 # modules/console_utils.py
+# This file does all the pretty printing to the console.
+# It prints all the helpful prompting from the agent.
+# It ads line art, animation, and justifies text.  
+
 import textwrap
 from rich.console import Console
 

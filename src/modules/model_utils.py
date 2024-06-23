@@ -1,4 +1,6 @@
-# modules/model_utils.py
+# src/modules/model_utils.py
+# This shows available models and initializes the user's model of choice.
+
 import subprocess
 from langchain_community.llms import Ollama
 
