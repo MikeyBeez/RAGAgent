@@ -44,13 +44,18 @@ OTTO is a cutting-edge AI chat agent for macOS, leveraging the power of LangChai
 
 Ensure Ollama is installed and running on your macOS system
 Pull the Llama3 model:
-bashCopyollama pull llama3
+
+    ```bash
+    ollama pull llama3
 
 
 🚀 Usage
 Run the chat application:
-bashCopycd src
-python main.py
+
+    ``` bash
+    cd src
+    python main.py
+
 🎛️ Commands
 
 /talk: Enable text-to-speech
@@ -81,19 +86,5 @@ MIT License
 <p align="center">
   Made with ❤️ by AI enthusiasts
 </p>
-```
-This updated README:
 
-Uses emojis and formatting to make it more visually appealing.
-Highlights the new features and changes, including the new commands and visual enhancements.
-Adds a pro tip about keeping the chat history under 15 interactions.
-Provides a more comprehensive and organized list of commands.
-Emphasizes the project's evolving nature and recent updates.
 
-To make this README even better, you should:
-
-Replace "https://your-image-url-here.com/otto_logo.png" with an actual logo for OTTO if you have one.
-Adjust any details that might not be accurate or need further clarification.
-Consider adding a brief section about visual.py and how users can utilize its image recognition capabilities.
-
-This refreshed README should give users a more exciting and informative introduction to OTTO and its capabilities.
