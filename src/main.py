@@ -13,6 +13,9 @@ def main():
     # Setup console
     console = console_utils.setup_console()
 
+    # Display welcome banner
+    console_utils.print_welcome_banner(console)
+
     # Get user name
     user_name = console_utils.get_user_name(console)
 
@@ -35,7 +38,7 @@ def main():
     prompt_template = llm_interaction.setup_prompt_template()
 
     console_utils.print_separator(console)
-    console.print("[bold cyan]Welcome to the AI Chat Agent![/bold cyan]")
+    console.print("[bold cyan]Chat session started. Type your messages or commands below.[/bold cyan]")
     console_utils.print_separator(console)
 
     while True:
@@ -48,7 +51,13 @@ def main():
                 break
             if isinstance(command_result, dict):
                 tts_enabled = command_result.get("tts_enabled", tts_enabled)
-                console_utils.print_command_result(console, command_result)
+
+                # Correctly handle printing chat history:
+                if "message" in command_result and isinstance(command_result["message"], list):
+                    console_utils.print_chat_history(console, command_result["message"])
+                else:
+                    console_utils.print_command_result(console, command_result)
+
             console_utils.print_separator(console)
             continue
 
@@ -74,7 +83,7 @@ def main():
         console_utils.print_separator(console)
 
     console_utils.print_separator(console)
-    console.print("[bold cyan]Thank you for using the AI Chat Agent. Goodbye![/bold cyan]")
+    console.print("[bold cyan]Thank you for using OTTO, your AI Chat Companion. Farewell![/bold cyan]")
     console_utils.print_separator(console)
 
     tts_module.cleanup_tts(tts_queue, tts_thread)
