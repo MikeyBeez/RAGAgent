@@ -1,8 +1,4 @@
 # modules/console_utils.py
-# This file does all the pretty printing to the console.
-# It prints all the helpful prompting from the agent.
-# It adds line art, animation, and justifies text.  
-
 import textwrap
 from rich.console import Console
 from rich.panel import Panel
@@ -48,13 +44,10 @@ def get_user_name(console):
     return prompt(HTML('<ansiyellow><b>Your chosen name (or press Enter for \'User\'): </b></ansiyellow>')).strip() or "User"
 
 def get_model_choice(console, available_models):
-    # Create a list of formatted model names
     model_list = [f"[cyan]• {model}[/cyan]" for model in available_models]
     
-    # Create two columns of models
     columns = Columns(model_list, equal=True, expand=False)
     
-    # Create a panel with the columns
     panel = Panel(
         Align.center(columns),
         title="[bold green]Available Models[/bold green]",
@@ -62,7 +55,6 @@ def get_model_choice(console, available_models):
         expand=False
     )
     
-    # Print the introduction and the panel
     console.print("[bold yellow]Behold, the pantheon of AI models at your disposal:[/bold yellow]\n")
     console.print(panel)
 
@@ -73,12 +65,13 @@ def get_user_input(console, user_name):
     return prompt(HTML(f'<ansimagenta><b>{user_name}, enter your prompt (type \'/help\' for available commands): </b></ansimagenta>'))
 
 def print_command_result(console, result):
-    console.print(f"[bold cyan]{result['message']}[/bold cyan]")
+    if isinstance(result.get('message'), Panel) and result.get('is_panel', False):
+        console.print(result['message'])
+    else:
+        console.print(f"[bold cyan]{result['message']}[/bold cyan]")
 
 def print_copy_instruction(console):
     console.print("[bold cyan]Type '/copy' to copy this interaction, or enter a new prompt.[/bold cyan]")
-
-# In the print_chat_history function in console_utils.py
 
 def print_chat_history(console, chat_history):
     """Prints the chat history to the console."""
@@ -90,4 +83,3 @@ def print_chat_history(console, chat_history):
             console.print(f"[bold green]Otto:[/bold green] {message.content}")
     console.print(f"\n[bold blue]Total interactions: {len(chat_history) // 2}[/bold blue]")
     console.print()  # Add a newline after the chat history
-

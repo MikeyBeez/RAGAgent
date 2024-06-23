@@ -1,5 +1,8 @@
 # modules/command_handler.py
 import pyperclip
+from rich.panel import Panel
+from rich.text import Text
+from rich.style import Style
 
 def is_command(user_input):
     return user_input.startswith('/')
@@ -32,7 +35,7 @@ def handle_command(command, chat_history, tts_enabled):
         except (ValueError, IndexError):
             return {"message": "Invalid command format. Use '/truncate n' where 'n' is the number of entries to keep."}
     elif command.lower() == "/help":
-        return {"message": get_help_text()}
+        return {"message": get_help_text(), "is_panel": True}
     elif command.lower() == "/lengthchathistory":
         return {"message": f"Current chat history length: {len(chat_history) // 2} interactions"}
     elif command.lower() == "/copychathistory":
@@ -44,14 +47,25 @@ def handle_command(command, chat_history, tts_enabled):
 
 def get_help_text():
     """Returns the help message text."""
-    help_text = "\n[bold cyan]Available Commands:[/bold cyan]\n"
-    help_text += "  /quit                - Exit the chat.\n"
-    help_text += "  /talk                - Enable text-to-speech.\n"
-    help_text += "  /notalk              - Disable text-to-speech.\n"
-    help_text += "  /copy                - Copy the last interaction to the clipboard.\n"
-    help_text += "  /printchathistory    - Display the chat history.\n" 
-    help_text += "  /truncate n          - Truncate chat history to the last 'n' entries.\n"
-    help_text += "  /clearchathistory    - Empty the chat history.\n" 
-    help_text += "  /lengthchathistory   - Display the number of interactions in the chat history.\n"
-    help_text += "  /copychathistory     - Copy the full chat history to the clipboard.\n"
-    return help_text
+    help_text = Text.assemble(
+        ("Available Commands:\n\n", Style(color="yellow", bold=True)),
+        ("  /quit                ", Style(color="cyan")), "- Exit the chat.\n",
+        ("  /talk                ", Style(color="cyan")), "- Enable text-to-speech.\n",
+        ("  /notalk              ", Style(color="cyan")), "- Disable text-to-speech.\n",
+        ("  /copy                ", Style(color="cyan")), "- Copy the last interaction to the clipboard.\n",
+        ("  /printchathistory    ", Style(color="cyan")), "- Display the chat history.\n",
+        ("  /truncate n          ", Style(color="cyan")), "- Truncate chat history to the last 'n' entries.\n",
+        ("  /clearchathistory    ", Style(color="cyan")), "- Empty the chat history.\n",
+        ("  /lengthchathistory   ", Style(color="cyan")), "- Display the number of interactions in the chat history.\n",
+        ("  /copychathistory     ", Style(color="cyan")), "- Copy the full chat history to the clipboard.\n"
+    )
+    
+    panel = Panel(
+        help_text,
+        title="OTTO Help",
+        border_style="bold green",
+        expand=False,
+        style="on black"
+    )
+    
+    return panel
