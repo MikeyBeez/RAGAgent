@@ -11,8 +11,8 @@ markdownCopy# 🤖 OTTO - Your Intelligent Conversational Companion
 <span style="color: #581845;">    ______________________    </span>
 <span style="color: #FF5733;">   /                      \   </span>
 <span style="color: #FFC300;">  /  Your AI Conversation  \  </span>
-<span style="color: #DAF7A6;"> /       Companion         \ </span>
-<span style="color: #FF5733;">/__________________________ \</span>
+<span style="color: #DAF7A6;"> /       Companion          \ </span>
+<span style="color: #FF5733;">/____________________________\</span>
   </pre>
 </p>
 
