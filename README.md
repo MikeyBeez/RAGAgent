@@ -2,7 +2,19 @@ Certainly! I'll update the README with the new information, add some jazz, and m
 markdownCopy# 🤖 OTTO - Your Intelligent Conversational Companion
 
 <p align="center">
-  <img src="https://your-image-url-here.com/otto_logo.png" alt="OTTO Logo" width="200"/>
+  <pre style="line-height: 1; text-align: center;">
+<span style="color: #FF5733;">    ____  _____ _____ ____    </span>
+<span style="color: #FFC300;">   / __ \|_   _|_   _/ __ \   </span>
+<span style="color: #DAF7A6;">  | |  | | | |   | || |  | |  </span>
+<span style="color: #FF5733;">  | |  | | | |   | || |  | |  </span>
+<span style="color: #C70039;">  | |__| | | |   | || |__| |  </span>
+<span style="color: #900C3F;">   \____/  |_|   |_| \____/   </span>
+<span style="color: #581845;">    ______________________    </span>
+<span style="color: #FF5733;">   /                      \   </span>
+<span style="color: #FFC300;">  /  Your AI Conversation  \  </span>
+<span style="color: #DAF7A6;"> /       Companion         \ </span>
+<span style="color: #FF5733;">/__________________________ \</span>
+  </pre>
 </p>
 
 ## 🌟 Overview
