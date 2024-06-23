@@ -18,7 +18,7 @@ def thinking_animation(console):
     animation = "|/-\\"
     colors = ["red", "green", "yellow", "blue", "magenta", "cyan"]  # Rich color names
     i = 0
-    while getattr(threading.currentThread(), "do_run", True):
+    while getattr(threading.current_thread(), "do_run", True):
         color = colors[i % len(colors)]
         message = f"[bold {color}]Otto is thinking {animation[i % len(animation)]}"
         console.print(message, end="\r")
