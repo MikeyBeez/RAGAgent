@@ -14,19 +14,19 @@ from prompt_toolkit.formatted_text import HTML
 def setup_console():
     return Console()
 
+
 def print_welcome_banner(console):
     banner = """
-    [bold yellow]
-     ____  _____ _____ ____  
-    / __ \|_   _|_   _/ __ \ 
-   | |  | | | |   | || |  | |
-   | |  | | | |   | || |  | |
-   | |__| |_| |_ _| || |__| |
-    \____/|_____|_____\____/ 
-    [/bold yellow]
-    [bold cyan]Your Intelligent Conversational Companion[/bold cyan]
+    [bold yellow] ██████  ████████ ████████  ██████ [/bold yellow]
+    [bold red]██    ██    ██       ██    ██    ██[/bold red]
+    [bold green]██    ██    ██       ██    ██    ██[/bold green]
+    [bold blue]██    ██    ██       ██    ██    ██[/bold blue]
+    [bold magenta]██    ██    ██       ██    ██    ██[/bold magenta]
+    [bold cyan] ██████     ██       ██     ██████ [/bold cyan]
+
+    [bold white]Your Intelligent Conversational Companion[/bold white]
     """
-    console.print(Panel(Align.center(banner), border_style="bold magenta", expand=False))
+    console.print(Panel(Align.center(banner), border_style="bold white", expand=False))
 
 def print_separator(console):
     console.print("\n", end="")  # Start a new line
