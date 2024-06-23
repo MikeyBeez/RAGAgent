@@ -1,4 +1,3 @@
-Certainly! I'll update the README with the new information, add some jazz, and make it more visually appealing. Here's an improved version of the README:
 markdownCopy# 🤖 OTTO - Your Intelligent Conversational Companion
 
 <p align="center">
