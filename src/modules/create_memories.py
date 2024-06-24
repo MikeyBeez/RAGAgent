@@ -25,4 +25,4 @@ def save_prompt_and_response(user_name, prompt, response):
     with open(file_path, 'w') as f:
         json.dump(memory_data, f, indent=2)
 
-    print(f"Memory saved: {file_path}")
+    #print(f"Memory saved: {file_path}")
