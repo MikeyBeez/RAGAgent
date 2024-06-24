@@ -6,18 +6,18 @@ Welcome, fellow sorcerers of code! Prepare to unravel the mystical workings of O
 
 OTTO is a modular spellbook, with each scroll (module) handling specific magical tasks:
 OTTO
-### 1. 🧠 main.py (The Grand Ritual)
-### 1. 📚 modules/
-### 1. 💬 chat_manager.py (Conversation Keeper)
-### 1. 📜 chat_history.py (Memory Scribe)
-### 1. 🎭 command_handler.py (Spell Interpreter)
-### 1. 💾 create_memories.py (Memory Crystallizer)
-### 1. 🗨️ llm_interaction.py (AI Whisperer)
-### 1. 🔮 model_utils.py (Model Summoner)
-### 1. 🖥️ console_utils.py (Visual Enchanter)
-### 1. 🧩 assemble.py (Context Weaver)
-### 1. 🔍 ddg_search.py (Knowledge Seeker)
-### 1. 🧪 tests/ (Spell Verification Chamber)
+### 🧠 main.py (The Grand Ritual)
+### 📚 modules/
+### 💬 chat_manager.py (Conversation Keeper)
+### 📜 chat_history.py (Memory Scribe)
+### 🎭 command_handler.py (Spell Interpreter)
+### 💾 create_memories.py (Memory Crystallizer)
+### 🗨️ llm_interaction.py (AI Whisperer)
+### 🔮 model_utils.py (Model Summoner)
+### 🖥️ console_utils.py (Visual Enchanter)
+### 🧩 assemble.py (Context Weaver)
+### 🔍 ddg_search.py (Knowledge Seeker)
+### 🧪 tests/ (Spell Verification Chamber)
 
 ## 🔮 Core Magical Components
 
