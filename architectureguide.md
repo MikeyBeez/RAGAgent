@@ -104,4 +104,8 @@ As you embark on your customization quest, remember these wise words:
 3. 🛡️ Test your spells thoroughly to prevent magical mishaps
 4. 🌟 Share your innovations with the OTTO community!
 
+view the log in the src directory:  
+
+python log_viewer.py --file chat_ollama.log --start-date 2024-06-23 --end-date 2024-06-24 --type INFO --search "AI response"
+
 May your code be bug-free and your AI responses ever insightful! Happy enchanting, code sorcerers! 🧙‍♂️✨
