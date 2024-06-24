@@ -23,14 +23,19 @@ All of these should be installed on your trusty macOS steed.
     ```bash
     conda create -n otto-env python=3.9
     conda activate otto-env
+    ```
 
 📚 Install the required scrolls of power:
+    
     ```bash
     pip install -r requirements.txt
+    ```    
 
 🧠 Summon the SpaCy language model:
+    
     ```bash
     python -m spacy download en_core_web_sm
+    ```
 
 
 🎭 Running OTTO
@@ -38,10 +43,12 @@ All of these should be installed on your trusty macOS steed.
 🏰 Enter the source chamber:
     ```bash
     cd src
+    ```
 
 🔮 Awaken OTTO:
     ```bash
     python main.py
+    ```
 
 📝 Choose your adventurer name and select your AI companion
 
