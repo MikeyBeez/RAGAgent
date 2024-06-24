@@ -16,8 +16,8 @@ All of these should be installed on your trusty macOS steed.
 
 1. 📥 Clone the sacred repository:
    ```bash
-   git clone https://github.com/your-repo/OTTO-AI-Chat-Companion.git
-   cd OTTO-AI-Chat-Companion
+   git clone https://github.com/MikeyBeez/RAGAgent.git
+   cd RAGAgent
 
 2. 🌈 Create a magical Conda environment (recommended):
     ```bash
