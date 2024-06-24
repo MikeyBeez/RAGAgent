@@ -86,7 +86,11 @@ Run the chat application:
 /help: Display all available commands
 /quit: Exit the application
 
-💡 Pro Tip: Keep your chat history under 15 interactions for the best experience!
+💡 Pro Tip: Keep your chat history under 15 interactions for the best experience!  
+   You can do this using slash commands. /lengthchathistory will show you how many
+   items are in your chat history.  /truncate 10 will delete older entries.  
+   If you want to group chat history, /savechat will save the old entries to a file
+   before you truncate.
 🎙️ Speech-to-Text
 Use macOS's built-in dictation:
 

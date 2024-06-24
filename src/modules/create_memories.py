@@ -1,16 +1,14 @@
-import os
+# modules/create_memories.py
 import json
+import os
 from datetime import datetime
 
-def save_prompt_and_response(prompt, response):
+def save_prompt_and_response(user_name, prompt, response):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"memories/{timestamp}.json"
-
-    # Create the directory if it doesn't exist
-    os.makedirs("memories", exist_ok=True)
-
-    # Create the JSON object
-    data = {
+    filename = f"{timestamp}.json"
+    
+    memory_data = {
+        "user_name": user_name,
         "user": prompt,
         "agent": response,
         "metadata": {
@@ -19,9 +17,12 @@ def save_prompt_and_response(prompt, response):
             "creation": timestamp
         }
     }
+    
+    memories_dir = 'memories'
+    os.makedirs(memories_dir, exist_ok=True)
+    
+    file_path = os.path.join(memories_dir, filename)
+    with open(file_path, 'w') as f:
+        json.dump(memory_data, f, indent=2)
 
-    # Write the JSON object to the file
-    with open(filename, "w") as file:
-        json.dump(data, file, indent=4)
-
-    return filename  # Return the filename for potential future use
+    print(f"Memory saved: {file_path}")
