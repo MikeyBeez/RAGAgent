@@ -59,23 +59,23 @@ OTTO is a cutting-edge AI chat agent for macOS, leveraging the power of LangChai
 
    ```bash
    pip install -r requirements.txt
-   ```
+```
 
 Ensure Ollama is installed and running on your macOS system
 Pull the Llama3 model:
 
-    ```bash
-    ollama pull llama3
-    ```
+   ```bash
+   ollama pull llama3
+```
 
 
 🚀 Usage
 Run the chat application:
 
-    ```bash
-    cd src
-    python main.py
-    ```
+   ```bash
+   cd src
+   python main.py
+```
 
 🎛️ Commands
 
