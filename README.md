@@ -23,6 +23,7 @@
                           🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨
 </pre>
 </p>
+OTTO is a work in progress.  I just switched from command_handler.py to process_prompt.py but I haven't updated the documentation yet.  Until I get a release version, expect documentation mismatches.  
 
 OTTO is a cutting-edge AI chat agent for macOS, leveraging the power of LangChain, Ollama, and various tools to create an engaging and intelligent conversational experience. Dive into the future of AI interaction with OTTO!
 
