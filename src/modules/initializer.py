@@ -44,7 +44,7 @@ def initialize_model(console):
     logging.info(f"Model {model_name} initialized successfully")
     return llm
 
-def initialize_chat_components():
+def initialize_chat_components(user_name):
     chat_hist = chat_history.initialize_chat_history(user_name)
     tts_enabled = config.TTS_ENABLED
     tts_queue = tts_module.setup_tts_queue()
@@ -81,7 +81,7 @@ def initialize_app():
     console = initialize_console()
     user_name = initialize_user(console)
     llm = initialize_model(console)
-    chat_hist, tts_enabled, tts_queue, tts_thread = initialize_chat_components()
+    chat_hist, tts_enabled, tts_queue, tts_thread = initialize_chat_components(user_name)
     chat_mgr = initialize_chat_manager()
     prompt_template, prompt_processor = initialize_prompt_components()
     

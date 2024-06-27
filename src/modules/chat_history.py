@@ -1,4 +1,5 @@
 # modules/chat_history.py
+import logging
 import json
 import os
 from datetime import datetime
@@ -13,15 +14,18 @@ def save_interaction(user_name, user_input, ai_response):
     save_prompt_and_response(user_name, user_input, ai_response)
 
 def get_memories(username, num_memories=10, memories_dir='memories'):
+    logging.info(f"Attempting to load memories for user: {username}")
+    logging.info(f"Looking in directory: {memories_dir}")
+    
     if not os.path.exists(memories_dir):
         os.makedirs(memories_dir)
-        print(f"Created memories directory: {memories_dir}")
+        logging.info(f"Created memories directory: {memories_dir}")
         return []
 
     memory_files = [f for f in os.listdir(memories_dir) if f.endswith('.json')]
-    memory_files.sort(reverse=True)  # Sort in descending order
+    memory_files.sort(reverse=True)  # Sort in descending order to get newest first
     
-    print(f"Found {len(memory_files)} memory files")
+    logging.info(f"Found {len(memory_files)} total memory files")
     
     memories = []
     for file in memory_files:
@@ -29,15 +33,20 @@ def get_memories(username, num_memories=10, memories_dir='memories'):
         try:
             with open(file_path, 'r') as f:
                 memory = json.load(f)
-            if memory.get('username') == username:
+            if memory.get('user_name') == username:
                 memories.append(memory)
+                logging.info(f"Added memory from file: {file} for user {username}")
                 if len(memories) >= num_memories:
                     break
         except json.JSONDecodeError:
-            print(f"Skipped invalid JSON file: {file}")
+            logging.warning(f"Skipped invalid JSON file: {file}")
     
-    print(f"Loaded {len(memories)} memories for user {username}")
-    return memories
+    logging.info(f"Loaded {len(memories)} memories for user {username}")
+    
+    # Sort memories by timestamp if available, otherwise by filename
+    memories.sort(key=lambda x: x.get('metadata', {}).get('creation', x.get('filename', '')), reverse=True)
+    
+    return memories[:num_memories]
 
 def populate_chat_history(chat_history, memories):
     for memory in memories:
