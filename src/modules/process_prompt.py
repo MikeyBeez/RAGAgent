@@ -52,6 +52,8 @@ class ProcessPrompt:
             return {"type": "command", "content": {"message": "Chat history has been cleared"}}
         elif command.startswith("/truncate"):
             return self.handle_truncate(command, chat_history)
+        elif command.startswith("/tr"):
+            return self.handle_truncate(command, chat_history)
         elif command == "/help":
             return {"type": "command", "content": {"message": self.get_help_text(), "is_panel": True}}
         elif command == "/lengthch":

@@ -13,25 +13,27 @@ def save_interaction(user_name, user_input, ai_response):
     save_prompt_and_response(user_name, user_input, ai_response)
 
 def get_memories(memories_dir='memories'):
-    #print(f"Getting memories from {memories_dir}")
+    if not os.path.exists(memories_dir):
+        os.makedirs(memories_dir)
+        print(f"Created memories directory: {memories_dir}")
+        return []
+
     memory_files = [f for f in os.listdir(memories_dir) if f.endswith('.json')]
     memory_files.sort(reverse=True)  # Sort in descending order
     
-    print(f"Found  and loaded {len(memory_files)} memory files")
+    print(f"Found {len(memory_files)} memory files")
     
     memories = []
     for file in memory_files:
         file_path = os.path.join(memories_dir, file)
-        #print(f"Reading file: {file_path}")
         try:
             with open(file_path, 'r') as f:
                 memory = json.load(f)
             memories.append(memory)
-            #print(f"Added memory from {file}")
         except json.JSONDecodeError:
             print(f"Skipped invalid JSON file: {file}")
     
-    print(f"Returning {len(memories)} memories")
+    print(f"Loaded {len(memories)} memories")
     return memories
 
 def populate_chat_history(chat_history, memories):
@@ -44,3 +46,12 @@ def initialize_chat_history(memories_dir='memories'):
     memories = get_memories(memories_dir)
     populate_chat_history(chat_history, memories)
     return chat_history
+
+def convert_chat_to_history(chat):
+    history = []
+    for message in chat.messages:
+        if 'user' in message:
+            history.append(HumanMessage(content=message['user']))
+        elif 'agent' in message:
+            history.append(AIMessage(content=message['agent']))
+    return history

@@ -1,4 +1,5 @@
-# modules/console_utils.py
+# src/modules/console_utils.py
+
 import textwrap
 from rich.console import Console
 from rich.panel import Panel
@@ -41,7 +42,7 @@ def get_user_name(console):
                      "[cyan]What name shall we call you by on this journey?[/cyan]"),
         border_style="bold green"
     ))
-    return prompt(HTML('<ansiyellow><b>Your chosen name (or press Enter for \'User\'): </b></ansiyellow>')).strip() or "User"
+    return prompt(HTML('<ansiyellow><b>Your chosen name: </b></ansiyellow>')).strip()
 
 def get_model_choice(console, available_models):
     model_list = [f"[cyan]• {model}[/cyan]" for model in available_models]
@@ -58,11 +59,11 @@ def get_model_choice(console, available_models):
     console.print("[bold yellow]Behold, the pantheon of AI models at your disposal:[/bold yellow]\n")
     console.print(panel)
 
-    default_model = "llama3:latest" if "llama3:latest" in available_models else available_models[0]
-    return prompt(HTML(f'<ansiyellow><b>Choose your AI companion (default is {default_model}): </b></ansiyellow>')).strip() or default_model
+    return prompt(HTML('<ansiyellow><b>Choose your AI companion: </b></ansiyellow>')).strip()
 
 def get_user_input(console, user_name):
-    return prompt(HTML(f'<ansimagenta><b>{user_name}, enter your prompt (type \'/help\' for available commands): </b></ansimagenta>'))
+    console.print("[bold cyan]Type '/help' for available commands.[/bold cyan]")
+    return prompt(HTML(f'<ansimagenta><b>Enter your prompt, {user_name}: </b></ansimagenta>'))
 
 def print_command_result(console, result):
     if isinstance(result.get('message'), Panel) and result.get('is_panel', False):

@@ -19,3 +19,6 @@ def initialize_model(model_name):
     except Exception as e:
         print(f"Error initializing the model: {str(e)}")
         return None
+
+def switch_model(model_name):
+    return initialize_model(model_name)
