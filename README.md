@@ -90,18 +90,27 @@ Run the chat application:
 /quit: Exit the application
 
 💡 Pro Tip: Keep your chat history under 15 interactions for the best experience!  
-   You can do this using slash commands. /lengthchathistory will show you how many
-   items are in your chat history.  /truncate 10 will delete older entries.  
-   If you want to group chat history, /savechat will save the old entries to a file
-   before you truncate.
+   You can do this using slash commands. 
+   
+   If you want to group chat history before you truncate, 
+
+   /savechat will save the old entries to a file first.
+
+   /lengthchathistory will show you how many items are in your chat history.  
+
+   /truncate 10 will delete older entries.  
+   
 🎙️ Speech-to-Text
+
 Use macOS's built-in dictation:
 
 Enable in System Preferences > Keyboard > Dictation
+
 Use the keyboard shortcut (default: press Fn twice) to start dictation
 
 🌟 Project Status
-OTTO is evolving rapidly! We've recently added new commands, enhanced the visual appeal, and improved history management. Stay tuned for more exciting updates!
+OTTO is evolving rapidly! We've recently added new commands, enhanced the visual appeal, and improved history management. Stay tuned for more exciting updates!  Because it is rapidly evlving documentation is likely to be outdated between major releases -- of which so far there have been none.  
+
 🤝 Contributing
 While OTTO is primarily a personal project, we welcome ideas and discussions. Feel free to fork the repository and experiment!
 📜 License
