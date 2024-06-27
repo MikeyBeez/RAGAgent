@@ -45,7 +45,7 @@ def initialize_model(console):
     return llm
 
 def initialize_chat_components():
-    chat_hist = chat_history.initialize_chat_history()
+    chat_hist = chat_history.initialize_chat_history(user_name)
     tts_enabled = config.TTS_ENABLED
     tts_queue = tts_module.setup_tts_queue()
     tts_thread = tts_module.start_tts_thread(tts_queue)

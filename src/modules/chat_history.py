@@ -12,7 +12,7 @@ def save_interaction(user_name, user_input, ai_response):
     from modules.create_memories import save_prompt_and_response
     save_prompt_and_response(user_name, user_input, ai_response)
 
-def get_memories(memories_dir='memories'):
+def get_memories(username, num_memories=10, memories_dir='memories'):
     if not os.path.exists(memories_dir):
         os.makedirs(memories_dir)
         print(f"Created memories directory: {memories_dir}")
@@ -29,11 +29,14 @@ def get_memories(memories_dir='memories'):
         try:
             with open(file_path, 'r') as f:
                 memory = json.load(f)
-            memories.append(memory)
+            if memory.get('username') == username:
+                memories.append(memory)
+                if len(memories) >= num_memories:
+                    break
         except json.JSONDecodeError:
             print(f"Skipped invalid JSON file: {file}")
     
-    print(f"Loaded {len(memories)} memories")
+    print(f"Loaded {len(memories)} memories for user {username}")
     return memories
 
 def populate_chat_history(chat_history, memories):
@@ -41,9 +44,9 @@ def populate_chat_history(chat_history, memories):
         chat_history.append(HumanMessage(content=memory['user']))
         chat_history.append(AIMessage(content=memory['agent']))
 
-def initialize_chat_history(memories_dir='memories'):
+def initialize_chat_history(username, num_memories=10, memories_dir='memories'):
     chat_history = []
-    memories = get_memories(memories_dir)
+    memories = get_memories(username, num_memories, memories_dir)
     populate_chat_history(chat_history, memories)
     return chat_history
 
