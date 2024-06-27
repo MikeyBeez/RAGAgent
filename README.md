@@ -68,7 +68,6 @@ Pull the Llama3 model:
    ollama pull llama3
 ```
 
-
 🚀 Usage
 Run the chat application:
 
