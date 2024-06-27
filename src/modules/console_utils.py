@@ -13,6 +13,13 @@ def setup_console():
     return Console()
 
 def print_welcome_banner(console):
+    print("                      ***")
+    print("                      ***")
+    print("                      ***")
+    print("                      ***")
+    print("                      ***")
+    print("                      ***")
+    print("                      ***")
     banner = """
     [bold yellow] ██████  ████████ ████████  ██████ [/bold yellow]
     [bold red]██    ██    ██       ██    ██    ██[/bold red]

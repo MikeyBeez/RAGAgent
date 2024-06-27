@@ -2,7 +2,7 @@
 import os
 
 DEFAULT_USERNAME = "User"
-USERNAME = os.environ.get("OTTO_USERNAME", DEFAULT_USERNAME)
+USERNAME = "User"
 
 # Add other configuration variables here
 MODEL_NAME = os.environ.get("OTTO_MODEL", "default_model_name")
