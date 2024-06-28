@@ -1,182 +1,119 @@
 # 📚 OTTO API Guide: The Spellbook of Functions 🧙‍♂️
 
-## 🧠 main.py
+This grimoire unveils the mystical incantations that breathe life into OTTO, your AI Chat Companion. Within these pages, you'll find the secrets to understanding and extending OTTO's powers.
 
-### `main()`
-The central function that orchestrates the entire OTTO experience.
+## 🧠 app.py (The Invocation)
 
-## 💬 chat_manager.py
+### `run_chat_application()`
+This sacred ritual initiates the entire OTTO experience. It summons the necessary modules, manages the chat loop, and guides your AI adventure.
 
-### class Chat
-Represents a chat session.
+## 📚 modules/
 
-#### `__init__(self, title, messages=None)`
-- `title` (str): The title of the chat
-- `messages` (list, optional): Initial messages for the chat
+### 💬 chat_manager.py (Keeper of Conversations)
 
-#### `add_message(self, message)`
-- `message` (dict): A message to add to the chat
+#### class Chat
+- Represents a complete conversation, like a chapter in your AI saga.
 
-#### `to_dict(self)`
-Returns a dictionary representation of the chat.
+  #### `__init__(self, title, messages=None)`
+  - `title` (str): The title of the chat, marking its place in your chronicles.
+  - `messages` (list, optional): A collection of messages that form the conversation.
 
-### class ChatManager
-Manages chat sessions.
+  #### `add_message(self, message)`
+  - `message` (dict): A single exchange between you and OTTO, added to the ongoing conversation.
 
-#### `__init__(self, db_path='chats.db', chats_dir='chats')`
-- `db_path` (str): Path to the SQLite database
-- `chats_dir` (str): Directory to store chat files
+  #### `to_dict(self)`
+  - Transforms the chat object into a dictionary, suitable for storage or sharing.
 
-#### `save_chat(self, chat)`
-- `chat` (Chat): The chat to save
-Returns: The ID of the saved chat
+#### class ChatManager
+- The grand librarian of conversations, managing the storage and retrieval of entire chats.
 
-#### `list_chats(self)`
-Returns: A list of tuples containing chat IDs, titles, and creation times
+  #### `__init__(self, db_path='chats.db', chats_dir='chats')`
+  - `db_path` (str): The location of the SQLite database where chat metadata is stored.
+  - `chats_dir` (str): The directory where the full conversation scrolls are kept.
 
-#### `load_chat(self, chat_id)`
-- `chat_id` (str): The ID of the chat to load
-Returns: A Chat object if found, None otherwise
+  #### `save_chat(self, chat)`
+  - `chat` (Chat): The conversation to be preserved for posterity.
 
-## 📜 chat_history.py
+  #### `list_chats(self)`
+  - Unveils a list of all saved chats, allowing you to revisit past adventures.
 
-### `add_to_history(chat_history, user_input, ai_response)`
-- `chat_history` (list): The current chat history
-- `user_input` (str): The user's input
-- `ai_response` (str): The AI's response
+  #### `load_chat(self, chat_id)`
+  - `chat_id` (str): The unique identifier of the chat you wish to summon.
 
-### `save_interaction(user_name, user_input, ai_response)`
-- `user_name` (str): The name of the user
-- `user_input` (str): The user's input
-- `ai_response` (str): The AI's response
+### 📜 chat_history.py (Chronicler of Exchanges)
 
-### `get_memories(memories_dir='memories')`
-- `memories_dir` (str): Directory containing memory files
-Returns: A list of memory dictionaries
+#### `add_to_history(chat_history, user_input, ai_response)`
+- `chat_history` (list): The current unfolding conversation history.
+- `user_input` (str): Your words of wisdom or insightful questions.
+- `ai_response` (str): OTTO's insightful replies and magical pronouncements.
 
-### `populate_chat_history(chat_history, memories)`
-- `chat_history` (list): The chat history to populate
-- `memories` (list): List of memory dictionaries
+#### `save_interaction(user_name, user_input, ai_response)`
+- `user_name` (str): The name you've chosen for your AI quest.
+- `user_input` (str): Your side of the exchange, recorded for posterity.
+- `ai_response` (str): OTTO's response, forever etched in the annals of your chat history.
 
-### `initialize_chat_history(memories_dir='memories')`
-- `memories_dir` (str): Directory containing memory files
-Returns: An initialized chat history list
+#### `get_memories(memories_dir='memories')`
+- `memories_dir` (str): The directory where OTTO's memories are stored.
+- Returns: A treasure trove of past interactions, each a shimmering memory.
 
-## 🎭 command_handler.py
+#### `populate_chat_history(chat_history, memories)`
+- `chat_history` (list): The chat history to be populated with the echoes of the past.
+- `memories` (list): A collection of memories to be woven into the current conversation.
 
-### `is_command(user_input)`
-- `user_input` (str): The user's input
-Returns: True if the input is a command, False otherwise
+#### `initialize_chat_history(memories_dir='memories')`
+- `memories_dir` (str): The path to the chamber of memories.
+- Returns: An initialized chat history, ready to capture new adventures.
 
-### `handle_command(command, chat_history, tts_enabled)`
-- `command` (str): The command to handle
-- `chat_history` (list): The current chat history
-- `tts_enabled` (bool): Whether text-to-speech is enabled
-Returns: A dictionary with the result of the command execution
+### 💾 create_memories.py (The Memory Weaver)
 
-## 💾 create_memories.py
+#### `save_prompt_and_response(user_name, prompt, response)`
+- `user_name` (str): The name you've chosen for this AI odyssey.
+- `prompt` (str): Your question or command, prompting OTTO's wisdom.
+- `response` (str): OTTO's insightful answer, carefully crafted to guide you.
 
-### `save_prompt_and_response(user_name, prompt, response)`
-- `user_name` (str): The name of the user
-- `prompt` (str): The user's prompt
-- `response` (str): The AI's response
+### 🗨️ llm_interaction.py (The AI Conjurer)
 
-## 🗨️ llm_interaction.py
+#### `setup_prompt_template()`
+- Prepares the sacred incantation that summons OTTO's intelligence. 
 
-### `setup_prompt_template()`
-Returns: A ChatPromptTemplate object
+#### `thinking_animation(console)`
+- `console` (Console): The enchanted window where the magic unfolds.
 
-### `thinking_animation(console)`
-- `console` (Console): The Rich console object
+#### `stream_llm_response(llm, prompt_template, user_input, chat_history, console, tts_queue, tts_enabled)`
+- `llm` (Ollama): The AI entity OTTO embodies, ready to converse.
+- `prompt_template` (ChatPromptTemplate): The structure of the incantation used to summon OTTO's knowledge.
+- `user_input` (str): Your query or command, setting the course of the conversation.
+- `chat_history` (list): The tapestry of past exchanges, providing context to OTTO's responses.
+- `console` (Console): The mystical display where the conversation unfolds.
+- `tts_queue` (Queue): A queue for messages to be spoken aloud by the text-to-speech enchantment.
+- `tts_enabled` (bool): A flag indicating whether OTTO's responses should be spoken aloud. 
+- Returns: The AI's complete response, a stream of wisdom from the depths of its knowledge.
 
-### `stream_llm_response(llm, prompt_template, user_input, chat_history, console, tts_queue, tts_enabled)`
-- `llm` (Ollama): The language model object
-- `prompt_template` (ChatPromptTemplate): The prompt template
-- `user_input` (str): The user's input
-- `chat_history` (list): The current chat history
-- `console` (Console): The Rich console object
-- `tts_queue` (Queue): Queue for text-to-speech
-- `tts_enabled` (bool): Whether text-to-speech is enabled
-Returns: The complete response text
+### 🔮 model_utils.py (The Model Summoner)
 
-## 🔮 model_utils.py
+#### `get_available_models()`
+- Summons a list of AI entities OTTO can embody, each with its own unique powers.
 
-### `get_available_models()`
-Returns: A list of available Ollama models
+#### `initialize_model(model_name)`
+- `model_name` (str): The chosen AI entity for OTTO to embody.
+- Returns: An initialized AI model, ready to engage in conversation.
 
-### `initialize_model(model_name)`
-- `model_name` (str): The name of the model to initialize
-Returns: An initialized Ollama model object
+### 🖥️ console_utils.py (Master of the Visual Arts)
 
-## 🖥️ console_utils.py
+This module governs the visual aspects of your AI journey, painting the console with colors, banners, and user-friendly prompts. It's here that you can customize the aesthetics of your interaction with OTTO.  
 
-### `setup_console()`
-Returns: A Rich Console object
+### 🧩 assemble.py (Guardian of Context)
 
-### `print_welcome_banner(console)`
-- `console` (Console): The Rich console object
+#### class SimpleContextAssembler
+- A master of weaving together past interactions and external knowledge to provide OTTO with a richer understanding of your requests.
 
-### `print_separator(console)`
-- `console` (Console): The Rich console object
+### 🔍 ddg_search.py (Seeker of Web Knowledge)
 
-### `print_wrapped_text(console, text)`
-- `console` (Console): The Rich console object
-- `text` (str): The text to print
+#### class DDGSearch
+- A powerful tool that allows OTTO to venture into the vast expanse of the web, retrieving information to enhance its responses and provide you with the most accurate and up-to-date knowledge.
 
-### `get_user_name(console)`
-- `console` (Console): The Rich console object
-Returns: The user's chosen name
+##  🧪  tests/ (The Proving Grounds)
 
-### `get_model_choice(console, available_models)`
-- `console` (Console): The Rich console object
-- `available_models` (list): List of available models
-Returns: The chosen model name
+Within this hallowed hall, the resilience of OTTO's magic is tested. Each module faces rigorous trials to ensure the stability and reliability of its enchantments. Cast `pytest` to witness these trials unfold.
 
-### `get_user_input(console, user_name)`
-- `console` (Console): The Rich console object
-- `user_name` (str): The user's name
-Returns: The user's input
-
-### `print_command_result(console, result)`
-- `console` (Console): The Rich console object
-- `result` (dict): The command execution result
-
-### `print_copy_instruction(console)`
-- `console` (Console): The Rich console object
-
-### `print_chat_history(console, chat_history)`
-- `console` (Console): The Rich console object
-- `chat_history` (list): The chat history to print
-
-## 🧩 assemble.py
-
-### class SimpleContextAssembler
-
-#### `__init__(self)`
-
-#### `extract_name(self, text)`
-- `text` (str): The text to extract a name from
-Returns: The extracted name or None
-
-#### `resolve_pronoun(self, prompt)`
-- `prompt` (str): The prompt to resolve pronouns in
-Returns: The prompt with resolved pronouns
-
-#### `assemble_context(self, prompt)`
-- `prompt` (str): The prompt to assemble context for
-Returns: A list of context elements
-
-#### `expand_prompt(self, prompt, context)`
-- `prompt` (str): The original prompt
-- `context` (list): The assembled context
-Returns: The expanded prompt with context
-
-## 🔍 ddg_search.py
-
-### class DDGSearch
-
-#### `__init__(self)`
-
-#### `run_search(self, query)`
-- `query` (str): The search query
-Returns: A list of search results
+May this grimoire serve you well on your AI adventures! Happy coding, and may OTTO's wisdom always guide you! ✨
