@@ -119,7 +119,7 @@ class ProcessPrompt:
             ("/listchats, /lc", "List saved chats"),
             ("/loadchat, /ldc", "Load a saved chat"),
             ("/search query", "Perform a web search"),
-            ("/memory query, /m query", "Search memories"),
+            ("/m query", "Search memories"),
         ]
 
         def create_command_text(command, description):
