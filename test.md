@@ -1,3 +1,4 @@
+```mermaid
 graph TD
     subgraph Head
         A["🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦"]
@@ -32,3 +33,4 @@ graph TD
     style G fill:#4444FF,stroke:#4444FF
     style O fill:#FFFF00,stroke:#FFFF00
     style P fill:#FFFF00,stroke:#FFFF00
+```
