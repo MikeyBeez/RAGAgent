@@ -7,7 +7,7 @@ from rich.panel import Panel
 from rich.text import Text
 from rich.style import Style
 from modules.ddg_search import DDGSearch
-from modules import chat_history
+from modules.ollama_embeddings import search_memories, add_memory
 
 class ProcessPrompt:
     def __init__(self):
@@ -23,6 +23,7 @@ class ProcessPrompt:
             "/sc": "/savechat",
             "/lc": "/listchats",
             "/ldc": "/loadchat",
+            "/m": "/memory",
         }
         self.ddg_search = DDGSearch()
 
@@ -30,10 +31,10 @@ class ProcessPrompt:
         if user_input.startswith('/'):
             if user_input.lower().startswith('/search '):
                 return self.handle_search(user_input[8:])
+            elif user_input.lower().startswith('/memory ') or user_input.lower().startswith('/m '):
+                return self.handle_memory(user_input[8:] if user_input.lower().startswith('/memory ') else user_input[3:], chat_history)
             else:
                 return self.handle_command(user_input, chat_history, tts_enabled)
-        elif user_input.lower().startswith('/memory '):
-            return self.handle_memory(user_input[8:], chat_history)
         else:
             return {"type": "prompt", "content": user_input}
 
@@ -90,9 +91,18 @@ class ProcessPrompt:
         return {"type": "prompt", "content": context + "\n\nQuestion: " + query}
 
     def handle_memory(self, query, chat_history):
-        relevant_memories = chat_history.search_memories(query)
-        context = f"Relevant memories: {relevant_memories}"
-        return {"type": "prompt", "content": context + "\n\n" + query}
+        relevant_memories = search_memories(query)
+        context = "Relevant memories:\n"
+        for mem in relevant_memories:
+            context += f"User: {mem['user']}\n"
+            context += f"Agent: {mem['agent']}\n"
+            if mem['search_results']:
+                context += f"Search Results: {mem['search_results']}\n"
+            context += "\n"
+        return {"type": "prompt", "content": context + "\n" + query}
+
+    def add_to_memory(self, user_input, agent_response, search_results=""):
+        add_memory(user_input, agent_response, search_results)
 
     def get_help_text(self):
         commands = [
@@ -109,7 +119,7 @@ class ProcessPrompt:
             ("/listchats, /lc", "List saved chats"),
             ("/loadchat, /ldc", "Load a saved chat"),
             ("/search query", "Perform a web search"),
-            ("/memory query", "Search chat memories"),
+            ("/memory query, /m query", "Search chat memories"),
         ]
 
         def create_command_text(command, description):

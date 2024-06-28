@@ -1,4 +1,6 @@
-# 🤖 OTTO - Your Intelligent Conversational Companion
+✨ Alas, brave adventurer! You've stumbled upon the grimoire of... ✨
+
+🤖 OTTO - Your Intelligent Conversational Companion 🦜
 
 <p align="center">
 <pre>
@@ -25,99 +27,82 @@
 </p>
 OTTO is a work in progress.  I just switched from command_handler.py to process_prompt.py but I haven't updated the documentation yet.  Until I get a release version, expect documentation mismatches.  
 
-OTTO is a cutting-edge AI chat agent for macOS, leveraging the power of LangChain, Ollama, and various tools to create an engaging and intelligent conversational experience. Dive into the future of AI interaction with OTTO!
+OTTO is a cutting-edge AI chat agent for macOS, imbued with the power of LangChain, Ollama, and various mystical artifacts to create an immersive and intelligent conversational experience. Prepare to embark on an extraordinary adventure in artificial intelligence! 🚀
 
-## ✨ Current Features
 
-- 🧠 Advanced chat functionality using Ollama with the Llama3 model
-- 📜 Robust chat history management (keep it under 15 for optimal performance!)
-- 🎨 Rich, colorful console interface for enhanced readability
-- 🗣️ Text-to-speech functionality using macOS's built-in 'say' command
-- 📋 Easy interaction copying to clipboard
-- 📊 Chat history statistics and management
+✨ Features: A Treasure Trove of AI Wonders ✨
 
-## 🚀 New & Exciting Updates
+🧠 Advanced Chat: Engage in thought-provoking conversations with OTTO, powered by the mighty Ollama and its Llama3 model.
 
-- 🖼️ Image recognition capabilities with `visual.py` (Google's multimodal models)
-- 🎭 Stylish, terminal-like help display
-- 📏 New commands: `/lengthchathistory` and `/copychathistory`
-- 🌈 Enhanced visual appeal with colorful OTTO banner
+📜 Chat History: Relive past exchanges and track the twists and turns of your AI adventure (keep it under 15 for optimal enchantment!).
 
-## 🔮 Planned Features
+🎨 Colorful Console: A visually stunning interface enhances your journey with vibrant colors and readability.
 
-- 🧩 Context assembly for improved conversation coherence
-- 🔍 Integration of external tools (e.g., web search, calculator)
-- 🧭 Intelligent routing between LLM and tools
-- 🧠 Enhanced context management and coreference resolution
-- 🔄 Expanded model options
+🗣️ Text-to-Speech: Listen as OTTO's words come to life through the mystical powers of macOS's built-in 'say' command.
 
-## 🛠️ Setup
+📋 Clipboard Conjuring: Copy interactions with ease and share your AI discoveries with the world.
 
-1. Ensure you have Python 3.8+ installed on your Mac
-2. Set up a Conda environment (recommended)
-3. Install required packages:
+📊 Chat Insights: Delve into the statistics of your conversations and manage the annals of your AI history.
 
-   ```bash
-   pip install -r requirements.txt
+🔍 Web Quest (/search): Unleash the power of DuckDuckGo search directly within OTTO and enrich your conversations with knowledge from the vast digital realm.
+
+🧠 Memory Recall (/memory): OTTO remembers! Utilize the /memory command to search past conversations using the magic of embeddings and RAG (Retrieval Augmented Generation).
+
+🚀 Embark on Your AI Quest! 🚀
+
+1. Gather Your Artifacts:
+
+🐍 Python 3.8+ (The Serpent of Wisdom)
+
+🧙‍♂️ Ollama (The Enchanted Model Summoner)
+
+🦙 Llama3 model (The Mystical Beast of Knowledge)
+
+Ensure these relics are properly installed on your macOS system.
+
+2. Installation Incantation:
+
+```bash
+git clone https://github.com/MikeyBeez/RAGAgent.git
+cd RAGAgent
+conda create -n otto-env python=3.9
+conda activate otto-env
+pip install -r requirements.txt
+python -m spacy download en_core_web_sm
+cd src
+cd ..
+python app.py
 ```
+Use code with caution.
+3. Choose Your Path:
 
-Ensure Ollama is installed and running on your macOS system
-Pull the Llama3 model:
+Select your adventurer name and your AI companion (from the available models).
+4. Command Your Quest:
 
-   ```bash
-   ollama pull llama3
-```
+💬 Type your messages naturally, as if speaking to a wise sage.
 
-🚀 Usage
-Run the chat application:
+🔍 Use magical slash commands to control your destiny:
 
-   ```bash
-   cd src
-   python main.py
-```
+/help: Reveal the ancient scrolls of available commands.
 
-🎛️ Commands
+/savechat: Preserve your current conversation for eternity.
 
-/talk: Enable text-to-speech
-/notalk: Disable text-to-speech
-/copy: Copy the last interaction to clipboard
-/printchathistory: Display chat history
-/truncate n: Keep last n entries in history
-/clearchathistory: Clear all chat history
-/lengthchathistory: Show number of interactions
-/copychathistory: Copy full history to clipboard
-/help: Display all available commands
-/quit: Exit the application
+/loadchat: Summon a past conversation from the archives.
 
-💡 Pro Tip: Keep your chat history under 15 interactions for the best experience!  
-   You can do this using slash commands. 
-   
-   If you want to group chat history before you truncate, 
+/search [query]: Embark on a web search without leaving OTTO's presence.
 
-   /savechat will save the old entries to a file first.
+/memory [query]: Journey through your past conversations to find relevant knowledge.
 
-   /lengthchathistory will show you how many items are in your chat history.  
+...and many more! Discover them all with /help.
 
-   /truncate 10 will delete older entries.  
-   
-🎙️ Speech-to-Text
+🏆 A Bard's Advice for a Successful Quest 🏆
 
-Use macOS's built-in dictation:
+💡 Keep your chat history under 15 interactions for optimal performance. (Use /truncate to manage lengthy sagas.)
 
-Enable in System Preferences > Keyboard > Dictation
+🔄 Remember to use /truncate to keep your chat history manageable.
 
-Use the keyboard shortcut (default: press Fn twice) to start dictation
+📋 Quickly copy interactions to your clipboard with /copy.
 
-🌟 Project Status
-OTTO is evolving rapidly! We've recently added new commands, enhanced the visual appeal, and improved history management. Stay tuned for more exciting updates!  Because it is rapidly evlving documentation is likely to be outdated between major releases -- of which so far there have been none.  
+🆘 If you encounter any mystical anomalies, consult the scrolls within the chat_ollama.log or seek guidance from the Council of Elders (open an issue on GitHub).
 
-🤝 Contributing
-While OTTO is primarily a personal project, we welcome ideas and discussions. Feel free to fork the repository and experiment!
-📜 License
-MIT License
-
-<p align="center">
-  Made with ❤️ by AI enthusiasts
-</p>
-
-
+🌟 May Your Conversations Be Ever Insightful! 🌟

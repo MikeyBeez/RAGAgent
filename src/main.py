@@ -1,4 +1,4 @@
-# src/main.py
+# main.py
 import sys
 import os
 import logging
@@ -10,9 +10,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.modules.initializer import initialize_app
 from src.modules import console_utils, llm_interaction, tts_module, chat_history, model_utils
 from src.modules.chat_manager import Chat
+from src.modules.process_prompt import ProcessPrompt
 import config
 
 def run_chat_application():
+    logging.info("Starting chat application")
     console = console_utils.setup_console()  # Initialize console at the beginning
     try:
         app_components = initialize_app()
@@ -26,7 +28,9 @@ def run_chat_application():
         chat_manager = app_components['chat_manager']
         current_chat = Chat("Untitled Chat")  # Create a new Chat object
         prompt_template = app_components['prompt_template']
-        prompt_processor = app_components['prompt_processor']
+        prompt_processor = ProcessPrompt()
+
+        logging.info("All components initialized successfully")
 
         console_utils.print_welcome_banner(console)
         console_utils.print_separator(console)
@@ -35,9 +39,11 @@ def run_chat_application():
 
         while True:
             user_input = console_utils.get_user_input(console, user_name)
+            logging.debug(f"Received user input: {user_input}")
             console_utils.print_separator(console)
 
             processed_input = prompt_processor.process_input(user_input, chat_hist, tts_enabled)
+            logging.debug(f"Processed input type: {processed_input['type']}")
 
             if processed_input["type"] == "command":
                 logging.info(f"User {user_name} entered command: {user_input}")
@@ -68,20 +74,6 @@ def run_chat_application():
                             else:
                                 console.print("Chat not found.")
                                 logging.warning(f"User {user_name} attempted to load non-existent chat with ID: {chat_id}")
-                        elif processed_input["content"]["command"] == "model":
-                            available_models = model_utils.get_available_models()
-                            console.print("[bold cyan]Available models:[/bold cyan]")
-                            for i, model in enumerate(available_models, 1):
-                                console.print(f"{i}. {model}")
-                            model_choice = console.input("[bold yellow]Enter the number of the model you want to use (or press Enter to keep the current model): [/bold yellow]")
-                            if model_choice.isdigit() and 1 <= int(model_choice) <= len(available_models):
-                                new_model = available_models[int(model_choice) - 1]
-                                llm = model_utils.switch_model(new_model)
-                                console.print(f"[bold green]Switched to model: {new_model}[/bold green]")
-                            elif model_choice == "":
-                                console.print("[bold yellow]Keeping the current model.[/bold yellow]")
-                            else:
-                                console.print("[bold red]Invalid choice. Keeping the current model.[/bold red]")
                     else:
                         tts_enabled = processed_input["content"].get("tts_enabled", tts_enabled)
                         if processed_input["content"].get("is_panel"):
@@ -97,11 +89,12 @@ def run_chat_application():
 
             try:
                 console.print("[bold green]Otto:[/bold green]")
+                logging.info("Sending prompt to LLM for response")
                 response_text = llm_interaction.stream_llm_response(
                     llm, prompt_template, processed_input['content'], chat_hist, console, tts_queue, tts_enabled
                 )
 
-                logging.info(f"AI response: {response_text}")
+                logging.info(f"Received LLM response of length: {len(response_text)}")
                 chat_history.add_to_history(chat_hist, user_input, response_text)
                 chat_history.save_interaction(user_name, user_input, response_text)
 
@@ -123,6 +116,14 @@ def run_chat_application():
                         "creation": datetime.now().strftime("%Y%m%d_%H%M%S")
                     }
                 })
+
+                # Add the interaction to memory
+                search_results = ""
+                if "Search results for" in processed_input['content']:
+                    search_results = processed_input['content'].split("Question:")[0]
+                prompt_processor.add_to_memory(user_input, response_text, search_results)
+                logging.info("Added interaction to memory")
+
                 logging.info(f"Chat history updated for user {user_name}")
 
                 console.print()  # Add a blank line

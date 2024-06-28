@@ -39,7 +39,7 @@ def stream_llm_response(llm, prompt_template, user_input, chat_history, console,
 
     # Log the assembled prompt
     logging.info("Assembled prompt:")
-    logging.info(final_prompt)
+    logging.info(prompt_template)
 
     # Start the thinking animation in a separate thread
     t = threading.Thread(target=thinking_animation, args=(console,))
