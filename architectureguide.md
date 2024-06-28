@@ -7,17 +7,17 @@ OTTO is a modular spellbook, with each scroll (module) handling specific magical
 OTTO
 
 ⬆️ 
--- main.py (The Grand Ritual)
+* main.py (The Grand Ritual)
 ⬆️  
--- / modules /
--- ├── chat_manager.py 
--- ├── chat_history.py
--- ├── console_utils.py
--- ├── create_memories.py 
--- ├── initializer.py 
--- ├── llm_interaction.py 
--- ├── model_utils.py 
--- └── ollama_embeddings.py
+* / modules /
+* ├── chat_manager.py 
+* ├── chat_history.py
+* ├── console_utils.py
+* ├── create_memories.py 
+* ├── initializer.py 
+* ├── llm_interaction.py 
+* ├── model_utils.py 
+* └── ollama_embeddings.py
 
 🔮 Core Magical Components
 
