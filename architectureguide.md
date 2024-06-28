@@ -5,28 +5,19 @@ Greetings, fellow sorcerers of code! Prepare to unravel the mystical workings of
 OTTO is a modular spellbook, with each scroll (module) handling specific magical tasks:
 
 OTTO
-                              ⬆️
+                             ⬆️ 
                              main.py (The Grand Ritual)
-                               ⬆️
+                             ⬆️  
                              / modules /
-                            ↙️  ⬇️   ↘️
-                          ....  ....    .....      
-                         /       |        \
-                       ....       ....     .....
-                      /           |          \
-                  chat_manager   chat_history   console_utils
-                     / \           |           /  \
-                   ....  ....    ....        ....  .... 
-                  /     \      /                /     \    
-                ....     .... ....           ....      ....
-               |           |  |             |          |
-              ....         ....  ....       ....        ....
-              |           |     |          |          |
-           Chat       create_memories  initialize_  model_utils
-                            |                 |
-                            ....             ....
-                            |                 |
-                        llm_interaction   ollama_embeddings
+                             |
+                             ├── chat_manager.py 
+                             ├── chat_history.py
+                             ├── console_utils.py
+                             ├── create_memories.py 
+                             ├── initializer.py 
+                             ├── llm_interaction.py 
+                             ├── model_utils.py
+                             └── ollama_embeddings.py
 
 🔮 Core Magical Components
 
