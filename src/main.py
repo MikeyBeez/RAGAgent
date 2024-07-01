@@ -11,6 +11,7 @@ from src.modules.initializer import initialize_app
 from src.modules import console_utils, llm_interaction, tts_module, chat_history, model_utils
 from src.modules.chat_manager import Chat
 from src.modules.process_prompt import ProcessPrompt
+from src.modules.pattern_manager import PatternManager
 import config
 
 def run_chat_application():
@@ -27,8 +28,12 @@ def run_chat_application():
         tts_thread = app_components['tts_thread']
         chat_manager = app_components['chat_manager']
         current_chat = Chat("Untitled Chat")  # Create a new Chat object
-        prompt_template = app_components['prompt_template']
         prompt_processor = ProcessPrompt()
+
+        # Initialize PatternManager
+        patterns_dir = os.path.join(os.path.expanduser('~'), '.config', 'fabric', 'patterns')
+        selected_patterns_file = os.path.join(os.path.expanduser('~'), '.config', 'fabric', 'selected_patterns.json')
+        pattern_manager = PatternManager(patterns_dir, selected_patterns_file)
 
         logging.info("All components initialized successfully")
 
@@ -87,11 +92,37 @@ def run_chat_application():
 
             logging.info(f"Processed user input: {processed_input['content']}")
 
+            # Pattern selection
+            while True:
+                patterns = pattern_manager.get_selected_patterns()
+                console.print("\nAvailable patterns:")
+                for i, pattern in enumerate(patterns, 1):
+                    console.print(f"{i}. {pattern}")
+                console.print("0. Edit pattern list")
+
+                try:
+                    choice = int(console.input("\nSelect a pattern number: "))
+                    if choice == 0:
+                        pattern_manager.edit_pattern_list()
+                    elif 1 <= choice <= len(patterns):
+                        selected_pattern = patterns[choice - 1]
+                        system_content = pattern_manager.load_system_content(selected_pattern)
+                        console.print(f"\nUsing pattern: {selected_pattern}")
+                        break
+                    else:
+                        console.print("Invalid choice. Please try again.")
+                except ValueError:
+                    console.print("Invalid input. Please enter a number.")
+
             try:
                 console.print("[bold green]Otto:[/bold green]")
                 logging.info("Sending prompt to LLM for response")
+                
+                # Combine system content with user input
+                combined_input = f"{system_content}\n\nUser Input: {processed_input['content']}"
+                
                 response_text = llm_interaction.stream_llm_response(
-                    llm, prompt_template, processed_input['content'], chat_hist, console, tts_queue, tts_enabled
+                    llm, combined_input, "", chat_hist, console, tts_queue, tts_enabled
                 )
 
                 logging.info(f"Received LLM response of length: {len(response_text)}")
