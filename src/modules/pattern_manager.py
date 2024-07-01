@@ -8,6 +8,7 @@ class PatternManager:
         self.patterns_dir = patterns_dir
         self.selected_patterns_file = selected_patterns_file
         self.initial_patterns = [
+            "simple"
             "analyze_claims",
             "analyze_debate",
             "analyze_incident",
