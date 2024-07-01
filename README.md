@@ -25,7 +25,7 @@
                           🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨
 </pre>
 </p>
-OTTO is a work in progress.  Until I get a release version, expect some documentation mismatches.  
+This is OTTO's first release version!  I'm continuing development in the new fabric branch.  You can switch there by pressing what currently says main on RAGAgent's github page.    
 
 OTTO is a cutting-edge AI chat agent for macOS, imbued with the power of LangChain, Ollama, and various mystical artifacts to create an immersive and intelligent conversational experience. Prepare to embark on an extraordinary adventure in artificial intelligence! 🚀
 
