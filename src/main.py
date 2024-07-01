@@ -118,11 +118,8 @@ def run_chat_application():
                 console.print("[bold green]Otto:[/bold green]")
                 logging.info("Sending prompt to LLM for response")
                 
-                # Combine system content with user input
-                combined_input = f"{system_content}\n\nUser Input: {processed_input['content']}"
-                
                 response_text = llm_interaction.stream_llm_response(
-                    llm, combined_input, "", chat_hist, console, tts_queue, tts_enabled
+                    llm, system_content, processed_input['content'], chat_hist, console, tts_queue, tts_enabled
                 )
 
                 logging.info(f"Received LLM response of length: {len(response_text)}")
