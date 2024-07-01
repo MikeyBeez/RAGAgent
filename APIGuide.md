@@ -43,25 +43,34 @@ This sacred ritual initiates the entire OTTO experience. It summons the necessar
 
 ### 📜 chat_history.py (Chronicler of Exchanges)
 
-#### `add_to_history(chat_history, user_input, ai_response, pattern)`
+#### `add_to_history(chat_history, user_input, ai_response)`
 - `chat_history` (list): The current unfolding conversation history.
 - `user_input` (str): Your words of wisdom or insightful questions.
 - `ai_response` (str): OTTO's insightful replies and magical pronouncements.
-- `pattern` (str): The Fabric pattern used for this exchange.
 
-#### `save_interaction(user_name, user_input, ai_response, pattern)`
+#### `save_interaction(user_name, user_input, ai_response)`
 - `user_name` (str): The name you've chosen for your AI quest.
 - `user_input` (str): Your side of the exchange, recorded for posterity.
 - `ai_response` (str): OTTO's response, forever etched in the annals of your chat history.
-- `pattern` (str): The Fabric pattern that guided this interaction.
+
+#### `get_memories(memories_dir='memories')`
+- `memories_dir` (str): The directory where OTTO's memories are stored.
+- Returns: A treasure trove of past interactions, each a shimmering memory.
+
+#### `populate_chat_history(chat_history, memories)`
+- `chat_history` (list): The chat history to be populated with the echoes of the past.
+- `memories` (list): A collection of memories to be woven into the current conversation.
+
+#### `initialize_chat_history(memories_dir='memories')`
+- `memories_dir` (str): The path to the chamber of memories.
+- Returns: An initialized chat history, ready to capture new adventures.
 
 ### 💾 create_memories.py (The Memory Weaver)
 
-#### `save_prompt_and_response(user_name, prompt, response, pattern)`
+#### `save_prompt_and_response(user_name, prompt, response)`
 - `user_name` (str): The name you've chosen for this AI odyssey.
 - `prompt` (str): Your question or command, prompting OTTO's wisdom.
 - `response` (str): OTTO's insightful answer, carefully crafted to guide you.
-- `pattern` (str): The Fabric pattern that shaped this memory.
 
 ### 🗨️ llm_interaction.py (The AI Conjurer)
 
@@ -71,9 +80,9 @@ This sacred ritual initiates the entire OTTO experience. It summons the necessar
 #### `thinking_animation(console)`
 - `console` (Console): The enchanted window where the magic unfolds.
 
-#### `stream_llm_response(llm, system_content, user_input, chat_history, console, tts_queue, tts_enabled)`
+#### `stream_llm_response(llm, prompt_template, user_input, chat_history, console, tts_queue, tts_enabled)`
 - `llm` (Ollama): The AI entity OTTO embodies, ready to converse.
-- `system_content` (str): The Fabric pattern's system message, guiding OTTO's behavior.
+- `prompt_template` (ChatPromptTemplate): The structure of the incantation used to summon OTTO's knowledge.
 - `user_input` (str): Your query or command, setting the course of the conversation.
 - `chat_history` (list): The tapestry of past exchanges, providing context to OTTO's responses.
 - `console` (Console): The mystical display where the conversation unfolds.
