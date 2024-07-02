@@ -80,9 +80,9 @@ This sacred ritual initiates the entire OTTO experience. It summons the necessar
 #### `thinking_animation(console)`
 - `console` (Console): The enchanted window where the magic unfolds.
 
-#### `stream_llm_response(llm, prompt_template, user_input, chat_history, console, tts_queue, tts_enabled)`
+#### `stream_llm_response(llm, system_content, user_input, chat_history, console, tts_queue, tts_enabled)`
 - `llm` (Ollama): The AI entity OTTO embodies, ready to converse.
-- `prompt_template` (ChatPromptTemplate): The structure of the incantation used to summon OTTO's knowledge.
+- `system_content` (str): The Fabric pattern's system message, guiding OTTO's behavior.
 - `user_input` (str): Your query or command, setting the course of the conversation.
 - `chat_history` (list): The tapestry of past exchanges, providing context to OTTO's responses.
 - `console` (Console): The mystical display where the conversation unfolds.
@@ -143,6 +143,44 @@ This module governs the visual aspects of your AI journey, painting the console 
   #### `load_system_content(self, pattern_name)`
   - `pattern_name` (str): Loads the system content for a specific Fabric pattern.
   - Returns: The system content (instructions) for the specified pattern.
+
+### 🎭 process_prompt.py (The Input Sorcerer)
+
+#### class ProcessPrompt
+- Interprets and processes user inputs, determining whether they are commands or prompts.
+
+  #### `__init__(self)`
+  - Initializes the ProcessPrompt object with command shortcuts and a DDGSearch instance.
+
+  #### `process_input(self, user_input, chat_history, tts_enabled)`
+  - `user_input` (str): The raw input from the user.
+  - `chat_history` (list): The current conversation history.
+  - `tts_enabled` (bool): Whether text-to-speech is enabled.
+  - Returns: A dictionary containing the processed input type and content.
+
+  #### `handle_command(self, command, chat_history, tts_enabled)`
+  - `command` (str): The command to be processed.
+  - `chat_history` (list): The current conversation history.
+  - `tts_enabled` (bool): Whether text-to-speech is enabled.
+  - Returns: A dictionary containing the command result.
+
+  #### `handle_search(self, query)`
+  - `query` (str): The search query.
+  - Returns: A dictionary containing the search results and formatted query.
+
+  #### `handle_memory(self, query, chat_history)`
+  - `query` (str): The memory search query.
+  - `chat_history` (list): The current conversation history.
+  - Returns: A dictionary containing relevant memories and the original query.
+
+  #### `add_to_memory(self, user_input, agent_response, search_results="")`
+  - `user_input` (str): The user's input.
+  - `agent_response` (str): OTTO's response.
+  - `search_results` (str, optional): Any search results associated with the interaction.
+  - Adds the interaction to OTTO's memory.
+
+  #### `get_help_text(self)`
+  - Returns: A formatted panel containing help text for available commands.
 
 ## 🧪 tests/ (The Proving Grounds)
 
