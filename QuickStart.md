@@ -42,6 +42,8 @@ All of these should be installed on your trusty macOS steed.
    mkdir -p ~/.config/fabric/patterns
    cp -R patterns/* ~/.config/fabric/patterns/
    ```
+6. cp config_sample.py config.py
+   set your model and user name
 
 ## 🎭 Running OTTO: Awakening the AI Spirit 🎭
 
