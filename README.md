@@ -63,6 +63,7 @@ OTTO is a cutting-edge AI chat agent for macOS, now enhanced with the power of F
    conda create -n otto-env python=3.9
    conda activate otto-env
    pip install -r requirements.txt
+   cp config_sample.py config.py
    python -m spacy download en_core_web_sm
    cd src
    cd ..
