@@ -46,10 +46,10 @@ All of these should be installed on your trusty macOS steed.
 ## 🎭 Running OTTO: Awakening the AI Spirit 🎭
 
 1. 🏰 Enter the source chamber:
-   ```bash
-   cd src
-   cd ..
-   ```
+    cd into the project root.   
+ 
+
+
 
 2. 🔮 Awaken OTTO:
    ```bash

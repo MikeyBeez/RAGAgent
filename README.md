@@ -53,7 +53,7 @@ OTTO is a cutting-edge AI chat agent for macOS, now enhanced with the power of F
 1. **Gather Your Artifacts**:
    - 🐍 Python 3.8+ (The Serpent of Wisdom)
    - 🧙‍♂️ Ollama (The Enchanted Model Summoner)
-   - 🦙 Llama3 model (The Mystical Beast of Knowledge)
+   - 🦙 gemma2 model (The Mystical Beast of Knowledge)
    - 🧵 Fabric (The Loom of Patterns)
 
 2. **Installation Incantation**:
