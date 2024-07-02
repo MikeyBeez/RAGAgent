@@ -24,10 +24,12 @@ graph TD
         I[model_utils.py]
         J[ollama_embeddings.py] 
         K[pattern_manager.py]
+        L[process_prompt.py]
         
         H --> F
         C --> D
         B --> K
+        B --> L
     end 
 ```
 
@@ -72,8 +74,14 @@ graph TD
    - ollama_embeddings.py: Transforms those memories into a language understood by AI, using embeddings to create a searchable and retrievable knowledge base.
 
 10. 🧵 **The Pattern Loom (pattern_manager.py)**
-    - NEW! Manages the Fabric patterns that guide OTTO's conversational flow.
+    - Manages the Fabric patterns that guide OTTO's conversational flow.
     - Loads, selects, and applies conversation patterns to shape the AI's responses and behavior.
+
+11. 🎭 **The Input Sorcerer (process_prompt.py)**
+    - Interprets and processes user inputs, determining whether they are commands or prompts.
+    - Handles various commands like searching, memory recall, and chat management.
+    - Prepares prompts for the AI by adding context from searches or memory recalls.
+    - Manages the integration of Fabric patterns into the conversation flow.
 
 ## 🎨 Customization Canvases 🎨
 
@@ -103,6 +111,11 @@ Unleash your creativity and enhance OTTO with these customization opportunities:
   - Create new Fabric patterns to guide conversations on specific topics or for particular tasks.
   - Implement a pattern creation interface within OTTO, allowing users to craft custom conversation flows.
 
+- 🎭 **Input Enchantment (process_prompt.py)**
+  - Develop new command interpretations to expand OTTO's capabilities.
+  - Implement more advanced context-building techniques for user inputs.
+  - Create custom handlers for specific types of user queries or commands.
+
 - 🌐 **Web Wizardry**
   - Craft a web interface for OTTO using a framework like Flask or FastAPI, making it accessible from any browser.
   - Implement real-time chat updates using WebSockets for a more seamless and engaging user experience.
@@ -122,47 +135,5 @@ As you embark on your customization quest, remember these wise words:
 - 🧹 Keep your code clean and modular for easy enchantment.
 - 🛡️ Test your spells thoroughly to prevent magical mishaps.
 - 🌟 Share your innovations with the OTTO community!
-
-## 🧵 Fabric Integration Deep Dive
-
-The Fabric integration adds a new layer of versatility to OTTO's conversational abilities:
-
-1. **Pattern Structure**
-   - Fabric patterns are stored as Markdown files in `~/.config/fabric/patterns/`.
-   - Each pattern consists of a system message and optional user message templates.
-
-2. **Pattern Selection**
-   - Users can select patterns at the start of a conversation or switch patterns mid-conversation using the `/pattern` command.
-   - The `pattern_manager.py` module handles loading, selecting, and applying patterns.
-
-3. **Pattern Application**
-   - When a pattern is selected, its system message is used to guide OTTO's behavior and responses.
-   - The `llm_interaction.py` module incorporates the selected pattern into the AI's prompt.
-
-4. **Custom Pattern Creation**
-   - Users can create custom patterns by adding new Markdown files to the patterns directory.
-   - Consider implementing a pattern creation interface within OTTO for easy customization.
-
-5. **Pattern-Aware Memory**
-   - Enhance the memory system to take into account the current pattern when storing and retrieving memories.
-   - This allows for more context-aware recall and more coherent long-term conversations.
-
-## 🔮 Future Enchantments
-
-Consider these advanced features for future versions of OTTO:
-
-1. **Multi-Model Conversations**: Allow OTTO to switch between different AI models based on the conversation context or user preferences.
-
-2. **Adaptive Pattern Selection**: Implement an AI-driven system that automatically selects the most appropriate Fabric pattern based on the conversation flow.
-
-3. **Interactive Pattern Creation**: Develop a guided interface for users to create new Fabric patterns through conversation with OTTO.
-
-4. **Pattern Analytics**: Implement tracking and analysis of pattern usage to provide insights on which patterns are most effective or popular.
-
-5. **Collaborative Patterns**: Create a system for users to share and rate custom Fabric patterns within the OTTO community.
-
-6. **Voice Integration**: Expand the text-to-speech capabilities to include voice input, creating a fully voice-interactive AI companion.
-
-7. **Multimodal Interactions**: Integrate image and audio processing capabilities, allowing OTTO to understand and generate multi-media content.
 
 May your code be bug-free and your AI responses ever insightful! Happy enchanting, code sorcerers! 🧙‍♂️✨
