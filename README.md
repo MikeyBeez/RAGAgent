@@ -28,6 +28,8 @@
 
 OTTO is a cutting-edge AI chat agent for macOS, now enhanced with the power of Fabric! Combining LangChain, Ollama, and Fabric's pattern-based approach, OTTO offers an immersive and intelligent conversational experience. Prepare to embark on an extraordinary adventure in artificial intelligence! 🚀
 
+Young apprentice wizards can find additional scrolls of maps, spells, and rituals in the chamber of documentation.
+
 ## ✨ Features: A Treasure Trove of AI Wonders ✨
 
 🧠 **Advanced Chat**: Engage in thought-provoking conversations with OTTO, powered by Ollama and its Llama3 model.
