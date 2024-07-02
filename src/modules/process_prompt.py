@@ -25,6 +25,7 @@ class ProcessPrompt:
             "/lc": "/listchats",
             "/ldc": "/loadchat",
             "/m": "/memory",
+            "/sm": "/switch_model",
         }
         self.ddg_search = DDGSearch()
 
@@ -83,6 +84,9 @@ class ProcessPrompt:
         elif command in ["/savechat", "/listchats", "/loadchat"]:
             logging.debug(f"Delegating command: {command} to main loop") 
             return {"type": "command", "content": {"message": "HANDLE_IN_MAIN", "command": command}}
+        elif command.startswith("/switch_model") or command.startswith("/sm"):
+            logging.debug("Switching model")
+            return self.handle_switch_model(command)
         else:
             logging.warning(f"Unknown command encountered: {command}")
             return {"type": "command", "content": {"message": "Unknown command"}}
@@ -121,6 +125,13 @@ class ProcessPrompt:
         logging.debug("Memory search complete, returning results")
         return {"type": "prompt", "content": context + "\n" + query}
 
+    def handle_switch_model(self, command):
+        try:
+            _, model_name = command.split(maxsplit=1)
+            return {"type": "command", "content": {"message": "SWITCH_MODEL", "model": model_name}}
+        except ValueError:
+            return {"type": "command", "content": {"message": "Invalid command format. Use '/switch_model model_name' or '/sm model_name'."}}
+
     def add_to_memory(self, user_input, agent_response, search_results=""):
         logging.debug("Adding interaction to memory")
         add_memory(user_input, agent_response, search_results)
@@ -141,6 +152,7 @@ class ProcessPrompt:
             ("/loadchat, /ldc", "Load a saved chat"),
             ("/search query", "Perform a web search"),
             ("/m query", "Search memories"),
+            ("/switch_model, /sm", "Switch your model"),
         ]
 
         def create_command_text(command, description):
@@ -149,8 +161,8 @@ class ProcessPrompt:
                 (f"{description}\n", Style(color="yellow"))
             )
 
-        left_column = [create_command_text(cmd, desc) for cmd, desc in commands[:7]]
-        right_column = [create_command_text(cmd, desc) for cmd, desc in commands[7:]]
+        left_column = [create_command_text(cmd, desc) for cmd, desc in commands[:8]]
+        right_column = [create_command_text(cmd, desc) for cmd, desc in commands[8:]]
 
         columns = Columns([Text().join(left_column), Text().join(right_column)])
 

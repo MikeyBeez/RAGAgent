@@ -79,6 +79,17 @@ def run_chat_application():
                             else:
                                 console.print("Chat not found.")
                                 logging.warning(f"User {user_name} attempted to load non-existent chat with ID: {chat_id}")
+                    elif processed_input["content"].get("message") == "SWITCH_MODEL":
+                        new_model_name = processed_input["content"]["model"]
+                        new_llm = model_utils.switch_model(new_model_name)
+                        if new_llm:
+                            llm = new_llm
+                            console.print(f"[bold green]Switched to model: {new_model_name}[/bold green]")
+                            logging.info(f"User {user_name} switched to model: {new_model_name}")
+                        else:
+                            console.print(f"[bold red]Failed to switch to model: {new_model_name}[/bold red]")
+                            logging.error(f"Failed to switch to model: {new_model_name}")
+                        continue
                     else:
                         tts_enabled = processed_input["content"].get("tts_enabled", tts_enabled)
                         if processed_input["content"].get("is_panel"):
