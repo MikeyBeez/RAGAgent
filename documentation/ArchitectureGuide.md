@@ -75,13 +75,43 @@ graph TD
 
 10. 🧵 **The Pattern Loom (pattern_manager.py)**
     - Manages the Fabric patterns that guide OTTO's conversational flow.
-    - Loads, selects, and applies conversation patterns to shape the AI's responses and behavior.
+    - Loads and selects conversation patterns to shape the AI's responses and behavior.
 
 11. 🎭 **The Input Sorcerer (process_prompt.py)**
     - Interprets and processes user inputs, determining whether they are commands or prompts.
-    - Handles various commands like searching, memory recall, and chat management.
+    - Handles various commands like searching, memory recall, chat management, and Fabric pattern selection.
     - Prepares prompts for the AI by adding context from searches or memory recalls.
-    - Manages the integration of Fabric patterns into the conversation flow.
+
+## 🧵 Fabric Installation and Pattern Weaving
+
+To harness the power of Fabric patterns in your OTTO installation, follow these arcane steps:
+
+1. **Installation**
+   - Ensure that the Fabric patterns are installed in the `~/.config/fabric/patterns/` directory.
+   - If the patterns are not present, copy them from the `patterns/` directory in the OTTO repository to `~/.config/fabric/patterns/`.
+
+2. **Pattern Structure**
+   - Each Fabric pattern is stored in a separate directory within `~/.config/fabric/patterns/`.
+   - A pattern directory should contain at least a `system.md` file, which defines the system message for the AI.
+   - Optionally, a pattern directory can also include a `user.md` file, which provides a template for user inputs.
+
+3. **Adding New Patterns**
+   - To create a new Fabric pattern, follow these steps:
+     1. Create a new directory in `~/.config/fabric/patterns/` with a descriptive name for your pattern.
+     2. Inside the new directory, create a `system.md` file and write the system message that will guide the AI's behavior for this pattern.
+     3. Optionally, create a `user.md` file to provide a template for user inputs specific to this pattern.
+   - Your new pattern will now be available for selection within OTTO using the `/fabric` or `/f` command.
+
+4. **Selecting Patterns**
+   - During a conversation with OTTO, you can switch between Fabric patterns using the `/fabric` or `/f` command.
+   - When prompted, choose a pattern from the list of available patterns by entering its corresponding number.
+   - OTTO will load the selected pattern and use its system message to guide the conversation flow.
+
+5. **Viewing Current Pattern**
+   - To view the currently active Fabric pattern and its system content, use the `/showpattern` or `/sp` command.
+   - OTTO will display the name of the current pattern and the content of its `system.md` file.
+
+By mastering the art of Fabric patterns, you can tailor OTTO's conversational style and behavior to suit your specific needs and preferences. Experiment with different patterns and create your own to unlock new realms of AI-powered discourse!
 
 ## 🎨 Customization Canvases 🎨
 
@@ -106,10 +136,6 @@ Unleash your creativity and enhance OTTO with these customization opportunities:
 - 🔮 **Model Mastery (model_utils.py)**
   - Add support for different AI model providers, giving users a wider choice of AI companions.
   - Implement the ability to switch between different AI models during a chat session, allowing for dynamic conversational experiences.
-
-- 🧵 **Pattern Weaving (pattern_manager.py)**
-  - Create new Fabric patterns to guide conversations on specific topics or for particular tasks.
-  - Implement a pattern creation interface within OTTO, allowing users to craft custom conversation flows.
 
 - 🎭 **Input Enchantment (process_prompt.py)**
   - Develop new command interpretations to expand OTTO's capabilities.
