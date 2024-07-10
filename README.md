@@ -80,11 +80,23 @@ Young apprentice wizards can find additional scrolls of maps, spells, and ritual
    - 💬 Type your messages naturally, as if speaking to a wise sage.
    - 🔍 Use magical slash commands to control your destiny:
      - `/help`: Reveal the ancient scrolls of available commands.
+     - `/chat <title>`: Create a new chat with the given title.
      - `/savechat`: Preserve your current conversation for eternity.
      - `/loadchat`: Summon a past conversation from the archives.
-     - `/search [query]`: Embark on a web search without leaving OTTO's presence.
-     - `/memory [query]`: Journey through your past conversations to find relevant knowledge.
-     - `/pattern`: Choose a new Fabric pattern for your conversation.
+     - `/search <query>`: Embark on a web search without leaving OTTO's presence.
+     - `/memory <query>`, `/m <query>`: Journey through your past conversations to find relevant knowledge.
+     - `/fabric`, `/f`: Choose a new Fabric pattern for your conversation.
+     - `/showpattern`, `/sp`: Display the current Fabric pattern and its mystical content.
+
+## 🧙‍♂️ Sharing Code with the AI Sage 🧙‍♂️
+
+To share your arcane code with OTTO, use this potent incantation in your terminal:
+
+```bash
+find . -type f -not \( -path "*/__pycache__/*" -o -path "./src/archive/*" -o -path "./src/experiments/*" -o -path "./src/tests/*" -o -name "*.db" -o -name "*.pyc" -o -name "*.json" -o -name "config*" -o -path "*/chats/*" -o -path "./memories/*" -o -name "*.log" -o -name "*pytest*" -o -path "*/.git/*" \) -exec sh -c 'if file -b --mime-type "$1" | grep -qE "^text/"; then echo "--- $1 ---"; cat "$1"; fi' _ {} \; | pbcopy
+```
+
+This mystical command will gather all relevant code files, ignoring those in the forbidden realms, and copy them to your clipboard. Paste the result into your chat with OTTO, and the AI sage shall parse your code with ease.
 
 ## 🏆 A Bard's Advice for a Successful Quest 🏆
 
