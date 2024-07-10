@@ -30,6 +30,7 @@ All of these should be installed on your trusty macOS steed.
 3. 📚 Install the required scrolls of power:
    ```bash
    pip install -r requirements.txt
+   pip install fabric
    ```
 
 4. 🧠 Summon the SpaCy language model:
@@ -37,13 +38,50 @@ All of these should be installed on your trusty macOS steed.
    python -m spacy download en_core_web_sm
    ```
 
-5. 🧵 Weave the Fabric patterns:
+5. 🧵 Install Fabric:
+   - Navigate to where you want the Fabric project to live on your system in a semi-permanent place on your computer.
    ```bash
-   mkdir -p ~/.config/fabric/patterns
-   cp -R patterns/* ~/.config/fabric/patterns/
+   # Find a home for Fabric
+   cd /where/you/keep/code
    ```
+   - Clone the Fabric project to your computer.
+   ```bash
+   # Clone Fabric to your computer
+   git clone https://github.com/danielmiessler/fabric.git
+   ```
+   - Enter Fabric's main directory.
+   ```bash
+   # Enter the project folder (where you cloned it)
+   cd fabric
+   ```
+   - Install pipx:
+     - macOS:
+     ```bash
+     brew install pipx
+     ```
+     - Linux:
+     ```bash
+     sudo apt install pipx
+     ```
+     - Windows: Use WSL and follow the Linux instructions.
+   - Install Fabric:
+   ```bash
+   pipx install .
+   ```
+   - Run setup:
+   ```bash
+   fabric --setup
+   ```
+   - Restart your shell to reload everything.
+   - Test Fabric by running the help command:
+   ```bash
+   fabric --help
+   ```
+
 6. cp config_sample.py config.py
    set your model and user name
+
+Note: To update the Fabric patterns, rerun `fabric --setup`. Patterns are updated almost daily, so if you want the latest, make sure to run this command regularly.
 
 ## 🎭 Running OTTO: Awakening the AI Spirit 🎭
 
@@ -101,7 +139,7 @@ If you encounter any mystical anomalies:
 
 - Ensure Ollama is running and the chosen model is available.
 - Check the `chat_ollama.log` for clues.
-- Verify that Fabric patterns are properly installed in `~/.config/fabric/patterns/`.
+- Verify that Fabric patterns are properly installed by running `fabric --help`.
 - Consult the Council of Elders (aka open an issue on GitHub).
 
 ## 🌟 Embark on Your Adventure! 🌟
