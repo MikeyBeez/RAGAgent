@@ -2,6 +2,8 @@
 
 🤖 OTTO - Your Intelligent Conversational Companion 🦜
 
+🚀 Embark on Your AI Quest! 🚀
+
 <p align="center">
 <pre>
          🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦
@@ -107,5 +109,20 @@ This mystical command will gather all relevant code files, ignoring those in the
 📋 Quickly copy interactions to your clipboard with `/copy`.
 
 🆘 If you encounter any mystical anomalies, consult the scrolls within the `chat_ollama.log` or seek guidance from the Council of Elders (open an issue on GitHub).
+
+📜 Chat Persistence and Management
+OTTO provides a flexible chat management system that allows you to create, save, and load chats. However, it's important to understand how chat persistence works to ensure you don't lose your valuable conversations.
+
+When you start a new chat using the /chat <title> command, the chat is created in memory but not automatically saved.
+
+To persist a chat and ensure it's available for future sessions, you must explicitly save it using the /savechat command.
+
+If you exit the app without saving the current chat, the chat will be lost and cannot be recovered.
+
+To continue a previous conversation, use the /loadchat command to select and load a saved chat.
+
+The /listchats command displays a list of all saved chats, allowing you to choose which one to load.
+
+Remember to save your chats frequently to avoid losing your progress!
 
 🌟 May Your Conversations Be Ever Insightful! 🌟
