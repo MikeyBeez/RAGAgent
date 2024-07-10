@@ -10,13 +10,10 @@ from rich.style import Style
 from modules.ddg_search import DDGSearch
 from modules.ollama_embeddings import search_memories, add_memory
 
+
 class ProcessPrompt:
     def __init__(self):
         self.command_shortcuts = {
-            "/pch": "/printch",
-            "/cch": "/clearch",
-            "/lcc": "/lengthch",
-            "/ccc": "/copych",
             "/q": "/quit",
             "/nt": "/notalk",
             "/t": "/talk",
@@ -25,11 +22,12 @@ class ProcessPrompt:
             "/lc": "/listchats",
             "/ldc": "/loadchat",
             "/m": "/memory",
-            "/sm": "/switch_model",
+            "/f": "/fabric",
+            "/sp": "/showpattern",
         }
         self.ddg_search = DDGSearch()
 
-    def process_input(self, user_input, chat_history, tts_enabled):
+    def process_input(self, user_input, chat_history):
         logging.debug(f"Processing user input: {user_input}")
         if user_input.startswith('/'):
             if user_input.lower().startswith('/search '):
@@ -40,12 +38,12 @@ class ProcessPrompt:
                 return self.handle_memory(user_input[8:] if user_input.lower().startswith('/memory ') else user_input[3:], chat_history)
             else:
                 logging.debug("Detected other command")
-                return self.handle_command(user_input, chat_history, tts_enabled)
+                return self.handle_command(user_input, chat_history)
         else:
             logging.debug("Input is a prompt, returning content")
             return {"type": "prompt", "content": user_input}
 
-    def handle_command(self, command, chat_history, tts_enabled):
+    def handle_command(self, command, chat_history):
         command = self.command_shortcuts.get(command.lower(), command.lower())
         logging.debug(f"Handling command: {command}")
 
@@ -55,38 +53,29 @@ class ProcessPrompt:
             return {"type": "command", "content": {"tts_enabled": True, "message": "Text-to-speech enabled"}}
         elif command == "/notalk":
             return {"type": "command", "content": {"tts_enabled": False, "message": "Text-to-speech disabled"}}
-        elif command == "/copy" and chat_history:
+        elif command == "/copy":
             logging.debug("Copying last interaction")
             to_copy = f"User: {chat_history[-2].content}\nOtto: {chat_history[-1].content}"
             pyperclip.copy(to_copy)
             return {"type": "command", "content": {"message": "Copied last interaction to clipboard!"}}
-        elif command == "/printch":
-            logging.debug("Printing chat history")
-            return {"type": "command", "content": {"message": chat_history}}
-        elif command == "/clearch":
-            logging.debug("Clearing chat history")
-            chat_history.clear()
-            return {"type": "command", "content": {"message": "Chat history has been cleared"}}
         elif command.startswith("/truncate") or command.startswith("/tr"): 
             logging.debug("Truncating chat history")
             return self.handle_truncate(command, chat_history)
         elif command == "/help":
             logging.debug("Displaying help text")
             return {"type": "command", "content": {"message": self.get_help_text(), "is_panel": True}}
-        elif command == "/lengthch":
-            logging.debug("Calculating chat history length")
-            return {"type": "command", "content": {"message": f"Current chat history length: {len(chat_history) // 2} interactions"}}
-        elif command == "/copych":
-            logging.debug("Copying full chat history")
-            full_history = "\n\n".join([f"User: {chat_history[i].content}\nOtto: {chat_history[i+1].content}" for i in range(0, len(chat_history), 2)])
-            pyperclip.copy(full_history)
-            return {"type": "command", "content": {"message": "Full chat history copied to clipboard!"}}
-        elif command in ["/savechat", "/listchats", "/loadchat"]:
-            logging.debug(f"Delegating command: {command} to main loop") 
-            return {"type": "command", "content": {"message": "HANDLE_IN_MAIN", "command": command}}
-        elif command.startswith("/switch_model") or command.startswith("/sm"):
-            logging.debug("Switching model")
-            return self.handle_switch_model(command)
+        elif command.startswith("/chat "):
+            chat_title = command[6:].strip()
+            if chat_title:
+                return {"type": "command", "content": {"message": "CREATE_NEW_CHAT", "title": chat_title}}
+        elif command == "/savechat":
+            return {"type": "command", "content": {"message": "SAVE_CHAT"}}
+        elif command == "/loadchat":
+            return {"type": "command", "content": {"message": "LOAD_CHAT"}}
+        elif command.startswith("/fabric") or command.startswith("/f"):
+            return {"type": "command", "content": {"message": "SELECT_PATTERN"}}
+        elif command.startswith("/showpattern") or command.startswith("/sp"):
+            return {"type": "command", "content": {"message": "SHOW_PATTERN"}}
         else:
             logging.warning(f"Unknown command encountered: {command}")
             return {"type": "command", "content": {"message": "Unknown command"}}
@@ -125,13 +114,6 @@ class ProcessPrompt:
         logging.debug("Memory search complete, returning results")
         return {"type": "prompt", "content": context + "\n" + query}
 
-    def handle_switch_model(self, command):
-        try:
-            _, model_name = command.split(maxsplit=1)
-            return {"type": "command", "content": {"message": "SWITCH_MODEL", "model": model_name}}
-        except ValueError:
-            return {"type": "command", "content": {"message": "Invalid command format. Use '/switch_model model_name' or '/sm model_name'."}}
-
     def add_to_memory(self, user_input, agent_response, search_results=""):
         logging.debug("Adding interaction to memory")
         add_memory(user_input, agent_response, search_results)
@@ -142,17 +124,14 @@ class ProcessPrompt:
             ("/talk, /t", "Enable text-to-speech"),
             ("/notalk, /nt", "Disable text-to-speech"),
             ("/copy", "Copy to clipboard"),
-            ("/printch, /pch", "List chat history"),
-            ("/tr n", "Truncate chat history to n"),
-            ("/clearch, /cch", "Clear chat history"),
-            ("/lengthch, /lcc", "Show chat history length"),
-            ("/copych, /ccc", "Copy full chat history"),
-            ("/savechat, /sc", "Save current chat"),
-            ("/listchats, /lc", "List saved chats"),
-            ("/loadchat, /ldc", "Load a saved chat"),
+            ("/truncate n, /tr n", "Truncate chat history to n"),
             ("/search query", "Perform a web search"),
-            ("/m query", "Search memories"),
-            ("/switch_model, /sm", "Switch your model"),
+            ("/memory query, /m query", "Search memories"),
+            ("/chat <title>", "Create a new chat"),
+            ("/savechat", "Save the current chat"),
+            ("/loadchat", "Load a saved chat"),
+            ("/fabric, /f", "Select a Fabric pattern"),
+            ("/showpattern, /sp", "Show the current pattern"),
         ]
 
         def create_command_text(command, description):
@@ -161,8 +140,8 @@ class ProcessPrompt:
                 (f"{description}\n", Style(color="yellow"))
             )
 
-        left_column = [create_command_text(cmd, desc) for cmd, desc in commands[:8]]
-        right_column = [create_command_text(cmd, desc) for cmd, desc in commands[8:]]
+        left_column = [create_command_text(cmd, desc) for cmd, desc in commands[:6]]
+        right_column = [create_command_text(cmd, desc) for cmd, desc in commands[6:]]
 
         columns = Columns([Text().join(left_column), Text().join(right_column)])
 

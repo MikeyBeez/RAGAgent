@@ -3,14 +3,13 @@
 import json
 import os
 import sqlite3
-from datetime import datetime
 import uuid
+from datetime import datetime
 
 class Chat:
     def __init__(self, title, messages=None):
         self.id = str(uuid.uuid4())
         self.title = title
-        self.creation_time = datetime.now().isoformat()
         self.messages = messages or []
 
     def add_message(self, message):
@@ -20,7 +19,6 @@ class Chat:
         return {
             'id': self.id,
             'title': self.title,
-            'creation_time': self.creation_time,
             'messages': self.messages
         }
 
@@ -38,13 +36,12 @@ class ChatManager:
                 CREATE TABLE IF NOT EXISTS chats (
                     id TEXT PRIMARY KEY,
                     title TEXT,
-                    creation_time TEXT,
-                    filename TEXT
+                    created_at TEXT
                 )
             ''')
 
     def save_chat(self, chat):
-        filename = f"{chat.id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        filename = f"{chat.id}.json"  # Use chat ID as filename
         file_path = os.path.join(self.chats_dir, filename)
         
         with open(file_path, 'w') as f:
@@ -53,30 +50,22 @@ class ChatManager:
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute('''
-                INSERT OR REPLACE INTO chats (id, title, creation_time, filename)
-                VALUES (?, ?, ?, ?)
-            ''', (chat.id, chat.title, chat.creation_time, filename))
-
-        return chat.id
+                INSERT OR REPLACE INTO chats (id, title, created_at)
+                VALUES (?, ?, ?)
+            ''', (chat.id, chat.title, datetime.now().isoformat()))
 
     def list_chats(self):
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT id, title, creation_time FROM chats ORDER BY creation_time DESC')
+            cursor.execute('SELECT id, title, created_at FROM chats ORDER BY created_at DESC')
             return cursor.fetchall()
 
     def load_chat(self, chat_id):
-        with sqlite3.connect(self.db_path) as conn:
-            cursor = conn.cursor()
-            cursor.execute('SELECT filename FROM chats WHERE id = ?', (chat_id,))
-            result = cursor.fetchone()
-            if result:
-                filename = result[0]
-                file_path = os.path.join(self.chats_dir, filename)
-                with open(file_path, 'r') as f:
-                    chat_data = json.load(f)
-                chat = Chat(chat_data['title'], chat_data['messages'])
-                chat.id = chat_data['id']
-                chat.creation_time = chat_data['creation_time']
-                return chat
+        file_path = os.path.join(self.chats_dir, f"{chat_id}.json")
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as f:
+                chat_data = json.load(f)
+            chat = Chat(chat_data['title'], chat_data['messages'])
+            chat.id = chat_data['id']
+            return chat
         return None

@@ -12,7 +12,6 @@ from src.modules import console_utils, llm_interaction, tts_module, chat_history
 from src.modules.chat_manager import Chat
 from src.modules.process_prompt import ProcessPrompt
 from src.modules.pattern_manager import PatternManager
-import config
 
 def run_chat_application():
     logging.info("Starting chat application")
@@ -47,7 +46,7 @@ def run_chat_application():
             logging.debug(f"Received user input: {user_input}")
             console_utils.print_separator(console)
 
-            processed_input = prompt_processor.process_input(user_input, chat_hist, tts_enabled)
+            processed_input = prompt_processor.process_input(user_input, chat_hist)
             logging.debug(f"Processed input type: {processed_input['type']}")
 
             if processed_input["type"] == "command":
@@ -56,74 +55,64 @@ def run_chat_application():
                     logging.info(f"User {user_name} initiated quit command")
                     break
                 if isinstance(processed_input["content"], dict):
-                    if processed_input["content"].get("message") == "HANDLE_IN_MAIN":
-                        if processed_input["content"]["command"] in ['/savechat', '/sc']:
-                            chat_title = console.input("Enter a title for this chat: ")
-                            current_chat.title = chat_title
-                            chat_id = chat_manager.save_chat(current_chat)
-                            console.print(f"Chat saved with title: {chat_title} (ID: {chat_id})")
-                            logging.info(f"User {user_name} saved chat: {chat_title} (ID: {chat_id})")
-                        elif processed_input["content"]["command"] in ['/listchats', '/lc']:
-                            chats = chat_manager.list_chats()
-                            for chat in chats:
-                                console.print(f"ID: {chat[0]}, Title: {chat[1]}, Created: {chat[2]}")
-                            logging.info(f"User {user_name} listed chats")
-                        elif processed_input["content"]["command"] in ['/loadchat', '/ldc']:
-                            chat_id = console.input("Enter the ID of the chat to load: ")
+                    if processed_input["content"].get("message") == "CREATE_NEW_CHAT":
+                        chat_title = processed_input["content"]["title"]
+                        current_chat = Chat(chat_title)
+                        chat_hist.clear()
+                        console.print(f"[bold green]Created new chat: {chat_title}[/bold green]")
+                    elif processed_input["content"].get("message") == "SAVE_CHAT":
+                        chat_manager.save_chat(current_chat)
+                        console.print(f"[bold green]Saved chat: {current_chat.title}[/bold green]")
+                    elif processed_input["content"].get("message") == "LOAD_CHAT":
+                        chat_list = chat_manager.list_chats()
+                        for i, chat_info in enumerate(chat_list, 1):
+                            console.print(f"{i}. {chat_info[1]} (Created: {chat_info[2]})")
+                        selection = int(console.input("Enter the number of the chat to load: "))
+                        if 1 <= selection <= len(chat_list):
+                            chat_id = chat_list[selection - 1][0]
                             loaded_chat = chat_manager.load_chat(chat_id)
                             if loaded_chat:
                                 current_chat = loaded_chat
-                                chat_hist = chat_history.convert_chat_to_history(loaded_chat)
-                                console.print(f"Loaded chat: {current_chat.title}")
-                                logging.info(f"User {user_name} loaded chat: {current_chat.title} (ID: {chat_id})")
-                            else:
-                                console.print("Chat not found.")
-                                logging.warning(f"User {user_name} attempted to load non-existent chat with ID: {chat_id}")
-                    elif processed_input["content"].get("message") == "SWITCH_MODEL":
-                        new_model_name = processed_input["content"]["model"]
-                        new_llm = model_utils.switch_model(new_model_name)
-                        if new_llm:
-                            llm = new_llm
-                            console.print(f"[bold green]Switched to model: {new_model_name}[/bold green]")
-                            logging.info(f"User {user_name} switched to model: {new_model_name}")
+                                chat_hist = current_chat.messages
+                                console.print(f"[bold green]Loaded chat: {current_chat.title}[/bold green]")
                         else:
-                            console.print(f"[bold red]Failed to switch to model: {new_model_name}[/bold red]")
-                            logging.error(f"Failed to switch to model: {new_model_name}")
-                        continue
+                            console.print("[bold red]Invalid selection.[/bold red]")
+                    elif processed_input["content"].get("message") == "SELECT_PATTERN":
+                        patterns = pattern_manager.get_all_patterns()
+                        console.print("\nAvailable patterns:")
+                        for i, pattern in enumerate(patterns, 1):
+                            console.print(f"{i}. {pattern}")
+                        
+                        while True:
+                            try:
+                                choice = int(console.input("\nSelect a pattern number: "))
+                                if 1 <= choice <= len(patterns):
+                                    selected_pattern = patterns[choice - 1]
+                                    pattern_manager.select_pattern(selected_pattern)
+                                    system_content = pattern_manager.load_system_content(selected_pattern)
+                                    console.print(f"\nUsing pattern: {selected_pattern}")
+                                    break
+                                else:
+                                    console.print("Invalid choice. Please try again.")
+                            except ValueError:
+                                console.print("Invalid input. Please enter a number.")
+                    
+                    elif processed_input["content"].get("message") == "SHOW_PATTERN":
+                        current_pattern = pattern_manager.get_selected_pattern()
+                        console.print(f"\nCurrent pattern: {current_pattern}")
+                        system_content = pattern_manager.load_system_content(current_pattern)
+                        console.print(f"\nSystem content:\n{system_content}")
+
                     else:
                         tts_enabled = processed_input["content"].get("tts_enabled", tts_enabled)
                         if processed_input["content"].get("is_panel"):
                             console.print(processed_input["content"]["message"])
-                        elif "message" in processed_input["content"] and isinstance(processed_input["content"]["message"], list):
-                            console_utils.print_chat_history(console, processed_input["content"]["message"])
                         else:
                             console_utils.print_command_result(console, processed_input["content"])
                 console_utils.print_separator(console)
                 continue
 
             logging.info(f"Processed user input: {processed_input['content']}")
-
-            # Pattern selection
-            while True:
-                patterns = pattern_manager.get_selected_patterns()
-                console.print("\nAvailable patterns:")
-                for i, pattern in enumerate(patterns, 1):
-                    console.print(f"{i}. {pattern}")
-                console.print("0. Edit pattern list")
-
-                try:
-                    choice = int(console.input("\nSelect a pattern number: "))
-                    if choice == 0:
-                        pattern_manager.edit_pattern_list()
-                    elif 1 <= choice <= len(patterns):
-                        selected_pattern = patterns[choice - 1]
-                        system_content = pattern_manager.load_system_content(selected_pattern)
-                        console.print(f"\nUsing pattern: {selected_pattern}")
-                        break
-                    else:
-                        console.print("Invalid choice. Please try again.")
-                except ValueError:
-                    console.print("Invalid input. Please enter a number.")
 
             try:
                 console.print("[bold green]Otto:[/bold green]")
