@@ -78,8 +78,12 @@ All of these should be installed on your trusty macOS steed.
    fabric --help
    ```
 
-6. cp config_sample.py config.py
-   set your model and user name
+6. 🔧 Configure OTTO:
+   - Copy the `config_sample.py` file to `config.py`:
+   ```bash
+   cp config_sample.py config.py
+   ```
+   - Open `config.py` in your favorite text editor and set your desired model and user name.
 
 Note: To update the Fabric patterns, rerun `fabric --setup`. Patterns are updated almost daily, so if you want the latest, make sure to run this command regularly.
 
