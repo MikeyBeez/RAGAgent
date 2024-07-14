@@ -30,7 +30,7 @@
 
 OTTO is a cutting-edge AI chat agent for macOS, now enhanced with the power of Fabric! Combining LangChain, Ollama, and Fabric's pattern-based approach, OTTO offers an immersive and intelligent conversational experience. Prepare to embark on an extraordinary adventure in artificial intelligence! 🚀
 
-Young apprentice wizards can find additional scrolls of maps, spells, and rituals in the chamber of documentation.
+Young apprentice wizards can find additional scrolls of maps, spells, and rituals in the chamber of documentation.  After chanting the README, wise apprentices will find the chamber of documentation and chant the quickstart spells.  
 
 ## ✨ Features: A Treasure Trove of AI Wonders ✨
 
