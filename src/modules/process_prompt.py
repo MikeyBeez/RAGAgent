@@ -22,10 +22,42 @@ class ProcessPrompt:
             "/lc": "/listchats",
             "/ldc": "/loadchat",
             "/m": "/memory",
+            "/cm": "/model",
             "/f": "/fabric",
             "/sp": "/showpattern",
         }
         self.ddg_search = DDGSearch()
+
+    def get_model_settings_text(self, available_models): 
+        settings = [
+            ("/temperature <float>", "Set the temperature for response generation"),
+            ("/topk <int>", "Set the top-k sampling parameter"),
+            ("/topp <float>", "Set the top-p (nucleus) sampling parameter"),
+            ("/repetitionpenalty <float>", "Set the repetition penalty"),
+            ("/maxlength <int>", "Set the maximum response length"),
+            ("/beamwidth <int>", "Set the beam width for beam search decoding"),
+        ]
+
+        def create_setting_text(setting, description):
+            return Text.assemble(
+                (f"  {setting:<25}", Style(color="green")),
+                (f"{description}\n", Style(color="yellow"))
+            )
+
+        settings_column = [create_setting_text(setting, desc) for setting, desc in settings]
+
+        models_column = [Text(f"{i}. {model}\n", style="cyan") for i, model in enumerate(available_models, 1)]
+
+        columns = Columns([Text().join(settings_column), Text().join(models_column)])
+
+        return Panel(
+            columns,
+            title="Model Settings",
+            border_style="bold magenta",
+            expand=False,
+            box=box.ROUNDED,
+            padding=(1, 1)
+        )
 
     def process_input(self, user_input, chat_history):
         logging.debug(f"Processing user input: {user_input}")
@@ -70,6 +102,8 @@ class ProcessPrompt:
                 return {"type": "command", "content": {"message": "CREATE_NEW_CHAT", "title": chat_title}}
         elif command == "/savechat":
             return {"type": "command", "content": {"message": "SAVE_CHAT"}}
+        elif command.startswith("/model") or command.startswith("/cm"):
+            return {"type": "command", "content": {"message": "SHOW_MODEL_SETTINGS"}}
         elif command == "/loadchat":
             return {"type": "command", "content": {"message": "LOAD_CHAT"}}
         elif command.startswith("/fabric") or command.startswith("/f"):
@@ -123,6 +157,7 @@ class ProcessPrompt:
             ("/quit, /q", "Exit the chat"),
             ("/talk, /t", "Enable text-to-speech"),
             ("/notalk, /nt", "Disable text-to-speech"),
+            ("/model, /cm", "Model settings and selection"),
             ("/copy", "Copy to clipboard"),
             ("/truncate n, /tr n", "Truncate chat history to n"),
             ("/search query", "Perform a web search"),

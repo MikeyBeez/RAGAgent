@@ -34,6 +34,9 @@ def run_chat_application():
         selected_patterns_file = os.path.join(os.path.expanduser('~'), '.config', 'fabric', 'selected_patterns.json')
         pattern_manager = PatternManager(patterns_dir, selected_patterns_file)
 
+        # Initialize system_content with a default value
+        system_content = ""
+
         logging.info("All components initialized successfully")
 
         console_utils.print_welcome_banner(console)
@@ -102,6 +105,38 @@ def run_chat_application():
                         console.print(f"\nCurrent pattern: {current_pattern}")
                         system_content = pattern_manager.load_system_content(current_pattern)
                         console.print(f"\nSystem content:\n{system_content}")
+
+                    elif processed_input["content"].get("message") == "SHOW_MODEL_SETTINGS":
+                        available_models = model_utils.get_available_models()
+                        model_settings_text = prompt_processor.get_model_settings_text(available_models)
+                        console.print(model_settings_text)
+                        
+                        while True:
+                            user_input = console.input("Enter a setting or model number (or 'q' to quit): ")
+                            if user_input.lower() == 'q':
+                                break
+                            
+                            if user_input.startswith('/'):
+                                setting, value = user_input.split(maxsplit=1)
+                                if setting == "/temperature":
+                                    temperature = float(value)
+                                    # Update temperature in llm_interaction.stream_llm_response call
+                                elif setting == "/topk":
+                                    top_k = int(value)
+                                    # Update top_k in llm_interaction.stream_llm_response call
+                                # Handle other settings similarly
+                            else:
+                                try:
+                                    model_index = int(user_input) - 1
+                                    if 0 <= model_index < len(available_models):
+                                        selected_model = available_models[model_index]
+                                        # Switch to the selected model
+                                        llm = model_utils.initialize_model(selected_model)
+                                        console.print(f"Switched to model: {selected_model}")
+                                    else:
+                                        console.print("Invalid model number.")
+                                except ValueError:
+                                    console.print("Invalid input. Please enter a setting or model number.")
 
                     else:
                         tts_enabled = processed_input["content"].get("tts_enabled", tts_enabled)
