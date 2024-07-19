@@ -48,7 +48,7 @@ class ScreenCapture:
 class Assistant:
     def __init__(self):
         print("Initializing Gemini model...")
-        self.model = genai.GenerativeModel('gemini-pro-vision')
+        self.model = genai.GenerativeModel('gemini-1.5-flash')
         print("Gemini model initialized")
 
     def answer(self, prompt, image):

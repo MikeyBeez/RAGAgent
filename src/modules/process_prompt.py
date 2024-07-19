@@ -91,7 +91,7 @@ class ProcessPrompt:
             to_copy = f"User: {chat_history[-2].content}\nOtto: {chat_history[-1].content}"
             pyperclip.copy(to_copy)
             return {"type": "command", "content": {"message": "Copied last interaction to clipboard!"}}
-        elif command.startswith("/truncate") or command.startswith("/tr"): 
+        elif command.startswith("/truncate") or command.startswith("/tr"):
             logging.debug("Truncating chat history")
             return self.handle_truncate(command, chat_history)
         elif command == "/help":
@@ -103,7 +103,7 @@ class ProcessPrompt:
                 return {"type": "command", "content": {"message": "CREATE_NEW_CHAT", "title": chat_title}}
         elif command == "/savechat":
             return {"type": "command", "content": {"message": "SAVE_CHAT"}}
-        elif command.startswith("/model") or command.startswith("/cm"):
+        elif command.startswith("/model") or command.startswith("/m"):
             return {"type": "command", "content": {"message": "SHOW_MODEL_SETTINGS"}}
         elif command == "/loadchat":
             return {"type": "command", "content": {"message": "LOAD_CHAT"}}
@@ -111,6 +111,10 @@ class ProcessPrompt:
             return {"type": "command", "content": {"message": "SELECT_PATTERN"}}
         elif command.startswith("/showpattern") or command.startswith("/sp"):
             return {"type": "command", "content": {"message": "SHOW_PATTERN"}}
+        elif command == "/printch" or command == "/pch":
+            return {"type": "command", "content": {"message": "PRINT_CHAT_HISTORY"}}
+        elif command == "/listchats" or command == "/lc":
+            return {"type": "command", "content": {"message": "LIST_CHATS"}}
         else:
             logging.warning(f"Unknown command encountered: {command}")
             return {"type": "command", "content": {"message": "Unknown command"}}

@@ -63,6 +63,12 @@ def run_chat_application():
                         current_chat = Chat(chat_title)
                         chat_hist.clear()
                         console.print(f"[bold green]Created new chat: {chat_title}[/bold green]")
+                    elif processed_input["content"].get("message") == "PRINT_CHAT_HISTORY": 
+                        console_utils.print_chat_history(console, chat_hist)
+                    elif processed_input["content"].get("message") == "LIST_CHATS":
+                        chat_list = chat_manager.list_chats()
+                        for i, chat_info in enumerate(chat_list, 1):
+                            console.print(f"{i}. {chat_info[1]} (Created: {chat_info[2]})")
                     elif processed_input["content"].get("message") == "SAVE_CHAT":
                         chat_manager.save_chat(current_chat)
                         console.print(f"[bold green]Saved chat: {current_chat.title}[/bold green]")

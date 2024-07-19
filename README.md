@@ -4,6 +4,8 @@
 
 🚀 Embark on Your AI Quest! 🚀
 
+See the video!  https://www.youtube.com/watch?v=YJAc-D-WXC4&t=191s  
+
 <p align="center">
 <pre>
          🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦
