@@ -29,102 +29,102 @@ See the video!  https://www.youtube.com/watch?v=YJAc-D-WXC4&t=191s
                           🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨
 </pre>
 </p>
+# 🤖 OTTO - Your Intelligent Streamlit AI Chat Companion 🦜
 
-OTTO is a cutting-edge AI chat agent for macOS, now enhanced with the power of Fabric! Combining LangChain, Ollama, and Fabric's pattern-based approach, OTTO offers an immersive and intelligent conversational experience. Prepare to embark on an extraordinary adventure in artificial intelligence! 🚀
+Welcome to OTTO, now with a sleek Streamlit interface! OTTO is an advanced AI chat agent that combines the power of LangChain, Ollama, and Fabric's pattern-based approach to offer an immersive and intelligent conversational experience.
 
-Young apprentice wizards can find additional scrolls of maps, spells, and rituals in the chamber of documentation.  After chanting the README, wise apprentices will find the chamber of documentation and chant the quickstart spells.  
+Consider this a starting place for a streamlit application. 
 
-## ✨ Features: A Treasure Trove of AI Wonders ✨
+## ✨ Features
 
-🧠 **Advanced Chat**: Engage in thought-provoking conversations with OTTO, powered by Ollama and its Llama3 model.
+- 🧠 **Advanced Chat**: Engage in thought-provoking conversations powered by Ollama and its language models.
+- 🎭 **Fabric Patterns**: Utilize pre-defined conversation patterns to guide and enhance your interactions.
+- 📜 **Chat History**: Keep track of your conversation history and easily navigate through past exchanges.
+- 🌐 **Web Interface**: Enjoy a user-friendly Streamlit interface for seamless interaction.
+- 🔍 **Web Search**: Perform DuckDuckGo searches directly within the chat interface.
+- 🧠 **Memory Recall**: OTTO remembers! Search past conversations using embeddings and RAG.
+- 🎨 **Model Selection**: Choose from various AI models to suit your needs.
+- 💾 **Chat Management**: Save, load, and clear chat sessions with ease.
 
-🎭 **Fabric Patterns**: Utilize a variety of pre-defined conversation patterns to guide and enhance your interactions.
+## 🚀 Getting Started
 
-📜 **Chat History**: Relive past exchanges and track the twists and turns of your AI adventure.
+### Prerequisites
 
-🎨 **Colorful Console**: A visually stunning interface enhances your journey with vibrant colors and readability.
+- 🐍 Python 3.8+
+- 🧙‍♂️ Ollama
+- 🦙 At least one Ollama model (e.g., llama2, gemma)
+- 🧵 Fabric
 
-🗣️ **Text-to-Speech**: Listen as OTTO's words come to life through the mystical powers of macOS's built-in 'say' command.
+### Installation
 
-📋 **Clipboard Conjuring**: Copy interactions with ease and share your AI discoveries with the world.
-
-📊 **Chat Insights**: Delve into the statistics of your conversations and manage the annals of your AI history.
-
-🔍 **Web Quest (/search)**: Unleash the power of DuckDuckGo search directly within OTTO.
-
-🧠 **Memory Recall (/memory)**: OTTO remembers! Search past conversations using embeddings and RAG.
-
-## 🚀 Embark on Your AI Quest! 🚀
-
-1. **Gather Your Artifacts**:
-   - 🐍 Python 3.8+ (The Serpent of Wisdom)
-   - 🧙‍♂️ Ollama (The Enchanted Model Summoner)
-   - 🦙 gemma2 model (The Mystical Beast of Knowledge)
-   - 🧵 Fabric (The Loom of Patterns)
-
-2. **Installation Incantation**:
-   ```bash
-   git clone https://github.com/MikeyBeez/RAGAgent.git
-   cd RAGAgent
-   conda create -n otto-env python=3.9
-   conda activate otto-env
-   pip install -r requirements.txt
-   cp config_sample.py config.py
-   python -m spacy download en_core_web_sm
-   cd src
-   cd ..
-   python app.py
+1. Clone the repository:
+   ```
+   git clone https://github.com/YourUsername/OTTO-Streamlit.git
+   cd OTTO-Streamlit
    ```
 
-3. **Choose Your Path**:
-   - Select your adventurer name and your AI companion (from the available models).
-   - Choose a Fabric pattern to guide your conversation.
+2. Create and activate a virtual environment:
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+   ```
 
-4. **Command Your Quest**:
-   - 💬 Type your messages naturally, as if speaking to a wise sage.
-   - 🔍 Use magical slash commands to control your destiny:
-     - `/help`: Reveal the ancient scrolls of available commands.
-     - `/chat <title>`: Create a new chat with the given title.
-     - `/savechat`: Preserve your current conversation for eternity.
-     - `/loadchat`: Summon a past conversation from the archives.
-     - `/search <query>`: Embark on a web search without leaving OTTO's presence.
-     - `/memory <query>`, `/m <query>`: Journey through your past conversations to find relevant knowledge.
-     - `/fabric`, `/f`: Choose a new Fabric pattern for your conversation.
-     - `/showpattern`, `/sp`: Display the current Fabric pattern and its mystical content.
+3. Install the required packages:
+   ```
+   pip install -r requirements.txt
+   ```
 
-## 🧙‍♂️ Sharing Code with the AI Sage 🧙‍♂️
+4. Set up Fabric patterns:
+   ```
+   fabric --setup
+   ```
 
-To share your arcane code with OTTO, use this potent incantation in your terminal:
+5. Configure OTTO:
+   - Copy `config_sample.py` to `config.py`
+   - Edit `config.py` to set your preferred model and username
 
-```bash
-find . -type f -not \( -path "*/__pycache__/*" -o -path "./src/archive/*" -o -path "./src/experiments/*" -o -path "./src/tests/*" -o -name "*.db" -o -name "*.pyc" -o -name "*.json" -o -name "config*" -o -path "*/chats/*" -o -path "./memories/*" -o -name "*.log" -o -name "*pytest*" -o -path "*/.git/*" \) -exec sh -c 'if file -b --mime-type "$1" | grep -qE "^text/"; then echo "--- $1 ---"; cat "$1"; fi' _ {} \; | pbcopy
+### Running OTTO
+
+Launch the Streamlit app with:
+
+```
+streamlit run src/otto.py
 ```
 
-This mystical command will gather all relevant code files, ignoring those in the forbidden realms, and copy them to your clipboard. Paste the result into your chat with OTTO, and the AI sage shall parse your code with ease.
+## 🎮 Using OTTO
 
-## 🏆 A Bard's Advice for a Successful Quest 🏆
+1. **Chat Interface**: Type your messages in the input box and click "Send" or press Enter.
+2. **Model Selection**: Use the sidebar to select different AI models.
+3. **Fabric Patterns**: Choose conversation patterns to guide OTTO's responses.
+4. **Chat Management**: Save, load, or clear chat sessions using the sidebar options.
+5. **Web Search**: Use the `/search` command followed by your query to perform a web search.
+6. **Memory Recall**: Use the `/memory` command to search through past conversations.
 
-💡 Experiment with different Fabric patterns to discover new depths in your conversations.
+## 🧠 Customization
 
-🔄 Use `/truncate` to keep your chat history manageable and ensure optimal performance.
+- **Adding Models**: Install new Ollama models to expand OTTO's capabilities.
+- **Fabric Patterns**: Create custom patterns in `~/.config/fabric/patterns/` to tailor conversations.
+- **Config Settings**: Adjust settings in `config.py` to personalize your experience.
 
-📋 Quickly copy interactions to your clipboard with `/copy`.
+## 🆘 Troubleshooting
 
-🆘 If you encounter any mystical anomalies, consult the scrolls within the `chat_ollama.log` or seek guidance from the Council of Elders (open an issue on GitHub).
+- Ensure Ollama is running and the chosen model is available.
+- Check `chat_ollama.log` for any error messages.
+- Verify that Fabric patterns are correctly installed.
+- For issues, please open a GitHub issue with a detailed description.
 
-📜 Chat Persistence and Management
-OTTO provides a flexible chat management system that allows you to create, save, and load chats. However, it's important to understand how chat persistence works to ensure you don't lose your valuable conversations.
+## 🌟 Contributing
 
-When you start a new chat using the /chat <title> command, the chat is created in memory but not automatically saved.
+We welcome contributions! Please feel free to submit pull requests, report bugs, or suggest new features.
 
-To persist a chat and ensure it's available for future sessions, you must explicitly save it using the /savechat command.
+## 📜 License
 
-If you exit the app without saving the current chat, the chat will be lost and cannot be recovered.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-To continue a previous conversation, use the /loadchat command to select and load a saved chat.
+## 🙏 Acknowledgments
 
-The /listchats command displays a list of all saved chats, allowing you to choose which one to load.
+- The Ollama team for their amazing language models
+- The Fabric project for enhancing conversation patterns
+- The Streamlit team for their fantastic web app framework
 
-Remember to save your chats frequently to avoid losing your progress!
-
-🌟 May Your Conversations Be Ever Insightful! 🌟
+Enjoy your AI adventures with OTTO! 🚀🤖
