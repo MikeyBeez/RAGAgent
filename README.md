@@ -35,6 +35,8 @@ Welcome to OTTO, now with a sleek Streamlit interface! OTTO is an advanced AI ch
 
 Consider this a starting place for a streamlit application. 
 
+To run the streamlit version, cd into the src dir and type python otto.py 
+
 ## ✨ Features
 
 - 🧠 **Advanced Chat**: Engage in thought-provoking conversations powered by Ollama and its language models.
